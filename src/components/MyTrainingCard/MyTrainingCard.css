@@ -1,0 +1,14 @@
+.titleTraining{
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* 
+.spaceTraningCard{
+    margin-right: 10px;
+} */
+
+.prev{
+    background-color: red;
+}

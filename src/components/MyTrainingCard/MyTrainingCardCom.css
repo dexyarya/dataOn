@@ -1,0 +1,50 @@
+.textContent{
+    margin: 0px 14px;
+    padding-top: 20px;
+}
+
+.tLocation{
+    font-size: 11px;
+}
+
+.tTitle{
+    font-weight: bold;
+}
+
+.tDate{
+    font-size: 12px;
+}
+
+.tUser{
+    font-size: 10px;
+}
+
+.cardTrainingEvent Image{
+    padding-right: 10px;
+    border-radius: 12px 0px 0px 0px;
+}
+.cardTrainingFooter{
+    background-color: rgba(211, 211, 211, 0.2);
+    padding: 10px;
+    border-radius: 0px 0px 12px 12px;
+}
+
+.cardTrainingFooter Button{
+    border-radius: 7px;
+}
+
+.textFooter{
+    margin-top: 4px;
+}
+
+.iconCard{
+    margin-right: 4px;
+}
+
+.tesCard {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(6, calc(50% - 40px));
+    grid-template-rows: minmax(150px, 1fr);
+    padding: 0 20px;
+  }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Row, Col } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 
 const { Meta } = Card;
@@ -18,7 +18,17 @@ function CardTrainingEvent(props) {
         }}
         cover={<img alt="image" src={props.img} />}
       >
-        <Meta title={props.title} description={props.description} />
+        <Col>
+          <Meta description={props.location} avatar={<EnvironmentOutlined />} />
+        </Col>
+
+        <Meta title={props.title} />
+        <Meta
+          description={props.description}
+          style={{
+            marginTop: "30px",
+          }}
+        />
         <Row
           style={{
             marginTop: "2px",
@@ -35,6 +45,7 @@ function CardTrainingEvent(props) {
 }
 
 CardTrainingEvent.propTypes = {
+  location: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

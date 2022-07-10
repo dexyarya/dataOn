@@ -16,9 +16,10 @@ const AllTrainingEvent = () => {
             title="All Training Event"
             className="site-badge-count-109"
             count="99+"
-            offset={[25, 15]}
+            offset={[25, 20]}
+            color="#2db7f5"
             style={{
-              backgroundColor: "#52c41a",
+              textColor: "#2db7f5",
             }}
           >
             <h2>All Training Event</h2>
@@ -47,37 +48,6 @@ const AllTrainingEvent = () => {
             )}
           />
         </Card>
-
-        {/* <Row justify="space-between"> */}
-        {/* <VirtualList> */}
-        {/* {dataCard.map((item) => (
-              <List.Item key={item.id}>
-                <Col>
-                  <CardTrainingEvent {...item} />
-                </Col>
-              </List.Item>
-            ))} */}
-        {/* </VirtualList> */}
-        {/* </Row>
-        </List> */}
-
-        {/* <VirtualList
-            // data={dataCard}
-            // height={400}
-            // itemHeight={47}
-            // iitemKey={dataCard.id}
-            // onscroll={onScroll}
-            > */}
-        {/* <Card>
-              <Row justify="space-between">
-                {dataCard.map((item, index) => (
-                  <Col key={index}> */}
-        {/* <CardTrainingEvent {...item} /> */}
-        {/* </Col>
-                ))}
-              </Row>
-            </Card> */}
-        {/* </VirtualList> */}
       </Card>
     </div>
   );

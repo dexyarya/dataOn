@@ -12,4 +12,6 @@ code {
     monospace;
 }
 
-
+.ant-badge-count{
+  color:blue;font-weight: bold;
+}

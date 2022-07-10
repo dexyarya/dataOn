@@ -17,7 +17,7 @@ const AllTrainingEvent = () => {
             className="site-badge-count-109"
             count="99+"
             offset={[25, 20]}
-            color="#2db7f5"
+            color="#e6f7ff"
             style={{
               textColor: "#2db7f5",
             }}

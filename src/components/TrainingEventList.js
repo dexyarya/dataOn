@@ -8,11 +8,11 @@ function TrainingEventList() {
       className="card"
       style={{
         margin: "15px",
-        borderRadius: "20px",
+        borderRadius: "10px",
       }}
     >
-      <Row className="row__card" align="center">
-        <Col sm={7} lg={13} xxl={18} className="col__breadcrumb">
+      <Row className="row__card" justify="space-between">
+        <Col className="col__breadcrumb">
           <Breadcrumb
             separator=">"
             style={{
@@ -24,22 +24,24 @@ function TrainingEventList() {
           </Breadcrumb>
         </Col>
 
-        <Col>
-          <Button
-            type="primary"
-            style={{
-              borderRadius: "5px",
-            }}
-          >
-            <PlusOutlined /> Create Training Event
-          </Button>
-        </Col>
+        <Row justify="space-between">
+          <Col>
+            <Button
+              type="primary"
+              style={{
+                borderRadius: "5px",
+              }}
+            >
+              <PlusOutlined /> Create Training Event
+            </Button>
+          </Col>
 
-        <Col xs={{ span: 1, offset: 1 }}>
-          <Button>
-            <MoreOutlined /> More
-          </Button>
-        </Col>
+          <Col style={{ marginLeft: "10px" }}>
+            <Button>
+              <MoreOutlined /> More
+            </Button>
+          </Col>
+        </Row>
       </Row>
     </Card>
   );

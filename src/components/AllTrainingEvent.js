@@ -2,6 +2,7 @@ import React from "react";
 import CardTrainingEvent from "./CardTrainingEvent";
 import { Card, Badge, List, Row, Col } from "antd";
 import dataCard from "./dataAllTraining";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const AllTrainingEvent = () => {
   return (
@@ -10,6 +11,7 @@ const AllTrainingEvent = () => {
         style={{
           margin: "15px",
           borderRadius: "10px",
+          height: 5,
         }}
         title={
           <Badge
@@ -26,28 +28,33 @@ const AllTrainingEvent = () => {
           </Badge>
         }
       >
-        <Card>
-          <List
-            grid={{
-              gutter: 16,
-              xs: 1,
-              sm: 2,
-              md: 4,
-              lg: 4,
-              xl: 5,
-            }}
-            dataSource={dataCard}
-            renderItem={(item) => (
-              <List.Item>
-                <Row justify="space-between">
-                  <Col>
-                    <CardTrainingEvent {...item} />
-                  </Col>
-                </Row>
-              </List.Item>
-            )}
-          />
-        </Card>
+        <InfiniteScroll dataLength={dataCard.length} hasMore={true} next={true}>
+          <Card>
+            <List
+              grid={{
+                gutter: 16,
+                xs: 1,
+                sm: 2,
+                md: 4,
+                lg: 4,
+                xl: 5,
+              }}
+              style={{
+                overflow: "hidden",
+              }}
+              dataSource={dataCard}
+              renderItem={(item) => (
+                <List.Item>
+                  <Row justify="space-between">
+                    <Col>
+                      <CardTrainingEvent {...item} />
+                    </Col>
+                  </Row>
+                </List.Item>
+              )}
+            />
+          </Card>
+        </InfiniteScroll>
       </Card>
     </div>
   );

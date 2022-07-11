@@ -12,7 +12,7 @@ const dataCard = [
     location: "DataOn Simprung, Jakarta Selatan, ID",
     title: "Training Angular",
     date: "9 Jun 2022, 15:00 - 18.00",
-    trainerUser: "Bambang Susanti",
+    trainerUser: "Juwitha Susanti",
   },
   {
     image:
@@ -81,7 +81,7 @@ function MyTrainingCard() {
       <Card
         style={{
           margin: "10px",
-          borderRadius: "20px",
+          borderRadius: "10px",
         }}
       >
         <div className="titleTraining">

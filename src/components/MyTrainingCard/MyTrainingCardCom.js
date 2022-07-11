@@ -18,13 +18,12 @@ const MyTrainingCardCom = (props) => {
       style={{
         borderRadius: 12,
         maxWidth: 400,
-        bordered: 20,
       }}
       bodyStyle={{ padding: "0" }}
     >
       <Row className="cardTrainingEvent">
         <Col>
-          <Image width={150} height={150} src={item.image} />
+          <Image width={150} height={140} src={item.image} />
         </Col>
         <Col className="textContent">
           <p className="tLocation">

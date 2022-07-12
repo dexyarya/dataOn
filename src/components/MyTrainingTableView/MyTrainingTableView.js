@@ -153,7 +153,7 @@ const MyTrainingTableView = () => {
           My Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count={109}
+            count={74}
             style={{
               backgroundColor: "#52c41a",
             }}

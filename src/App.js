@@ -1,6 +1,6 @@
 import "./App.css";
 import MyTrainingCard from "./components/MyTrainingCard/MyTrainingCard";
-// import MyTrainingTableView from "./components/MyTrainingTableView/MyTrainingTableView";
+import MyTrainingTableView from "./components/MyTrainingTableView/MyTrainingTableView";
 import TrainingEventList from "./components/TrainingEventList";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <TrainingEventList />
       <MyTrainingCard />
-      {/* <MyTrainingTableView /> */}
+      <MyTrainingTableView />
     </div>
   );
 }

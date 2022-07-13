@@ -4,6 +4,7 @@ import TrainingEventList from "./components/TrainingEventList";
 import FilterSection from "./components/FilterSection";
 import AllTrainingEvent from "./components/AllTrainingEvent";
 import MyTrainingTableView from "./components/MyTrainingTableView/MyTrainingTableView";
+import AllTrainingTableView from "./components/AllTrainingTableView/AllTrainingTableView";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <MyTrainingCard />
       <AllTrainingEvent />
       <MyTrainingTableView />
+      <AllTrainingTableView />
     </div>
   );
 }

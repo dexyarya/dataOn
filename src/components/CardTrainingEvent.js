@@ -9,10 +9,12 @@ function CardTrainingEvent(props) {
   return (
     <div>
       <Card
-        style={{
-          width: 250,
-          marginTop: "40px",
-        }}
+        style={
+          {
+            // width: 250,
+            // marginTop: "40px",
+          }
+        }
         cardStyle={{
           boxShadow: "5px 8px 24px 5px rgba(208, 216, 243, 0.6)",
         }}

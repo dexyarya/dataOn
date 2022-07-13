@@ -2,44 +2,41 @@ import React from "react";
 import { Card, Row, Col } from "antd";
 import { UserOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
+import "./ardTrainingEvent.css";
 
-const { Meta } = Card;
+// const { Meta } = Card;
 
 function CardTrainingEvent(props) {
   return (
     <div>
       <Card
-        style={
-          {
-            // width: 250,
-            // marginTop: "40px",
-          }
-        }
+        style={{
+          minWidth: 15,
+          // maxWidth: 230,
+          fontSize: "90%",
+
+          // minHeight: 50,
+          // Height: 10,
+        }}
         cardStyle={{
           boxShadow: "5px 8px 24px 5px rgba(208, 216, 243, 0.6)",
         }}
         cover={<img alt="image" src={props.img} />}
       >
-        <Col>
-          <Meta description={props.location} avatar={<EnvironmentOutlined />} />
-        </Col>
-
-        <Meta title={props.title} />
-        <Meta
-          description={props.description}
-          style={{
-            marginTop: "30px",
-          }}
-        />
-        <Row
-          style={{
-            marginTop: "2px",
-          }}
-        >
-          <Col style={{ marginRight: "4px" }}>
-            <UserOutlined />
+        <Row justify="between">
+          <Col>
+            <EnvironmentOutlined className="icon" />
           </Col>
-          {props.people} People register
+          <Col className="location">{props.location}</Col>
+        </Row>
+
+        <p className="title">{props.title}</p>
+        <p className="description">{props.description}</p>
+        <Row justify="between">
+          <Col>
+            <UserOutlined className="icon" />
+          </Col>
+          <Col className="people">{props.people} People register</Col>
         </Row>
       </Card>
     </div>

@@ -1,0 +1,45 @@
+.ant-table-thead{
+    background-color: rgb(3, 142, 216);
+
+}
+/* .ant-table-cell.ac{
+    background-color: green;
+} */
+
+.ant-table-thead .ant-table-cell {
+    background-color: rgb(3, 142, 216);
+    color: white;
+  }
+
+  .ant-table-thead th.ant-table-column-sort{
+    background-color: rgb(21, 161, 237);
+    color: black;
+  }
+
+  .ant-table-column-sorter {
+    color: white;
+  }
+
+.ant-table-column-sorter-up.active  {
+    color: black;
+}
+.ant-table-column-sorter-down.active {
+    color: black;
+}
+
+/* .table-striped-rows tr:nth-child(2n) td {
+    background-color: #f3f3f3;
+}
+.table-striped-rows thead {
+    background-color: #f1f1f1;
+} */
+
+.tableClass tr:nth-child(even) { background-color: #f3f3f3; }
+
+  /* .ant-table-column-sorters:hover .ant-table-column-sorter{
+    color: black;
+  } */
+
+  .ant-rate-star-second{
+    color: grey;
+  }

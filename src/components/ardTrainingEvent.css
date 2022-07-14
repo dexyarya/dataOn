@@ -1,0 +1,103 @@
+.description{
+    /* font-size:12px; */
+    color: rgba(0, 0, 0, 0.322);
+}
+.title{
+    font-size:16px;
+    margin-bottom: 50px;
+}
+.button_title{
+    color: #bcc1c7; 
+}
+
+.star{
+    font-size:12px;
+    color: #4a871085;
+}
+.recomen{
+    color: #60aa29; 
+    padding-left: 10px;
+    border-color: #60aa29 ;
+    background-color: #dcf0cada;
+    border-radius: 2px;
+}
+.iconStar{
+    color: "#60aa29";
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 425px){
+    .title{
+        margin-top: 5px;
+        font-size:7px;
+        margin-bottom: 10px;
+    }
+    .location{
+        margin-top: 6px;
+        font-size:9px;
+    }
+    .description{
+        font-size:8px
+    }
+    .people{
+        font-size: 9px;
+        margin-top: 5px;
+    }
+    .icon{
+        font-size: 10px;
+        margin-top: 5px;
+        
+    }
+}
+
+@media only screen and (max-width: 375px){
+    .title{
+        font-size:6px;
+    }
+    .location{
+        font-size:6px;
+        /* margin-top: 6px; */
+    /* font-size: 9px; */
+    }
+    .description{
+        font-size:4px;
+    }
+    .people{
+        margin-top: 9px;
+        font-size: 5px;
+    }
+    .icon{
+        /* margin-top: 2px; */
+        font-size: 6px;
+    }
+    ant-card-body {
+        padding: 11px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .title{
+        font-size:6px;
+    }
+    .location{
+        font-size:5px;
+        margin-top: 9px;
+    }
+    .description{
+        font-size:4px;
+    }
+    .people{
+        margin-top: 10px;
+        font-size: 4px;
+    }
+    .icon{
+        /* margin-top: 2px; */
+        font-size: 5px;
+    }
+    .ant-card-body {
+        padding: 8px;
+    }
+}
+
+
+

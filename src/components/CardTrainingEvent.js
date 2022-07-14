@@ -1,47 +1,78 @@
 import React from "react";
-import { Card, Row, Col } from "antd";
-import { UserOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import { Card, Row, Col, Tooltip, Button } from "antd";
+import {
+  UserOutlined,
+  EnvironmentOutlined,
+  StarFilled,
+} from "@ant-design/icons";
 import PropTypes from "prop-types";
-
-const { Meta } = Card;
+import "./ardTrainingEvent.css";
 
 function CardTrainingEvent(props) {
+  const joinText = "You've joined this class";
   return (
     <div>
-      <Card
-        style={
-          {
-            // width: 250,
-            // marginTop: "40px",
-          }
-        }
-        cardStyle={{
-          boxShadow: "5px 8px 24px 5px rgba(208, 216, 243, 0.6)",
-        }}
-        cover={<img alt="image" src={props.img} />}
-      >
-        <Col>
-          <Meta description={props.location} avatar={<EnvironmentOutlined />} />
-        </Col>
+      <Tooltip
+        placement="right"
+        title={props.title}
+        color="#fff"
+        overlay={
+          <div className="tooltip">
+            <h2 className="titleTooltip">{props.title}</h2>
+            <div className="recomen">
+              <StarFilled className="iconStar" />
+              Recommended Training
+            </div>
 
-        <Meta title={props.title} />
-        <Meta
-          description={props.description}
+            <Row
+              justify="center"
+              style={{ marginTop: "10px", borderRadius: "10px" }}
+            >
+              <Col align="center">
+                <Button
+                  className="btn_join"
+                  style={{ background: "#f5f5f5", borderColor: "#bcc1c7" }}
+                  size="large"
+                >
+                  <p className="button_title"> {joinText}</p>
+                </Button>
+                <Button type="text">
+                  <p className="button_title">Invite Other</p>
+                </Button>
+              </Col>
+            </Row>
+          </div>
+        }
+      >
+        <Card
           style={{
-            marginTop: "30px",
+            minWidth: 15,
+            fontSize: "90%",
           }}
-        />
-        <Row
-          style={{
-            marginTop: "2px",
+          cardStyle={{
+            boxShadow: "5px 8px 24px 5px rgba(208, 216, 243, 0.6)",
           }}
+          cover={<img alt="image" src={props.img} />}
         >
-          <Col style={{ marginRight: "4px" }}>
-            <UserOutlined />
-          </Col>
-          {props.people} People register
-        </Row>
-      </Card>
+          <Row justify="between">
+            <Col>
+              <EnvironmentOutlined className="icon" />
+            </Col>
+            <Col className="location">{props.location}</Col>
+          </Row>
+
+          <h3 className="title">{props.title}</h3>
+          <p className="description" style={{ marginBottom: "0" }}>
+            {props.description}
+          </p>
+          <Row justify="between">
+            <Col>
+              <UserOutlined className="icon" />
+            </Col>
+            <Col className="people">{props.people} People register</Col>
+          </Row>
+        </Card>
+      </Tooltip>
     </div>
   );
 }

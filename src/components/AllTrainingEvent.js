@@ -26,7 +26,7 @@ const AllTrainingEvent = () => {
         style={{
           margin: "15px",
           borderRadius: "10px",
-          height: 5,
+          // height: 5,
         }}
         title={
           <Badge
@@ -54,16 +54,18 @@ const AllTrainingEvent = () => {
             </p>
           }
           style={{
-            maxHeight: 350,
             overflow: "inherit",
+            overflowX: "hidden",
+            margin: "15px",
+            borderRadius: "10px",
           }}
         >
           <List
             grid={{
-              gutter: 16,
-              xs: 1,
+              gutter: 8,
+              xs: 2,
               sm: 2,
-              md: 4,
+              md: 3,
               lg: 4,
               xl: 5,
             }}
@@ -71,7 +73,7 @@ const AllTrainingEvent = () => {
             renderItem={(item) => (
               <List.Item>
                 <Row justify="space-between">
-                  <Col>
+                  <Col ant-col-xs-24 ant-col-xl-8>
                     <CardTrainingEvent {...item} />
                   </Col>
                 </Row>

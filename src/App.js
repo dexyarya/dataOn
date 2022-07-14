@@ -3,7 +3,8 @@ import MyTrainingCard from "./components/MyTrainingCard/MyTrainingCard";
 import TrainingEventList from "./components/TrainingEventList";
 import FilterSection from "./components/FilterSection";
 import AllTrainingEvent from "./components/AllTrainingEvent";
-// import MyTrainingTableView from "./components/MyTrainingTableView/MyTrainingTableView";
+import MyTrainingTableView from "./components/MyTrainingTableView/MyTrainingTableView";
+import AllTrainingTableView from "./components/AllTrainingTableView/AllTrainingTableView";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <FilterSection />
       <MyTrainingCard />
       <AllTrainingEvent />
-      {/* <MyTrainingTableView /> */}
+      <MyTrainingTableView />
+      <AllTrainingTableView />
     </div>
   );
 }

@@ -3,8 +3,27 @@
     color: rgba(0, 0, 0, 0.322);
 }
 .title{
-    /* font-size:16px; */
+    font-size:16px;
     margin-bottom: 50px;
+}
+.button_title{
+    color: #bcc1c7; 
+}
+
+.star{
+    font-size:12px;
+    color: #4a871085;
+}
+.recomen{
+    color: #60aa29; 
+    padding-left: 10px;
+    border-color: #60aa29 ;
+    background-color: #dcf0cada;
+    border-radius: 2px;
+}
+.iconStar{
+    color: "#60aa29";
+    margin-right: 5px;
 }
 
 @media only screen and (max-width: 425px){

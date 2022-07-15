@@ -7,9 +7,42 @@ import {
 } from "@ant-design/icons";
 import "./MyTrainingCardCom.css";
 
+const formatDate = (date) => {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const newDate = new Date(date);
+  const day = newDate.getDate();
+  const month = monthNames[newDate.getMonth()];
+  const year = newDate.getFullYear();
+  const hour = newDate.getHours();
+  const minute = newDate.getMinutes();
+  const dateToday = day + " " + month + " " + year + ", " + hour + ":" + minute;
+  return dateToday;
+};
+
+const formatEndDate = (endDate) => {
+  const newDate = new Date(endDate);
+  const hour = newDate.getHours();
+  const minute = newDate.getMinutes();
+  const clockToday = hour + ":" + minute;
+  return clockToday;
+};
+
 const MyTrainingCardCom = (props) => {
   const item = props.item;
-  const key = props.index;
+  const key = props.id;
   return (
     <Card
       key={key}
@@ -30,11 +63,13 @@ const MyTrainingCardCom = (props) => {
             <EnvironmentOutlined className="iconCard" />
             {item.location}
           </p>
-          <h3 className="tTitle">{item.title}</h3>
-          <p className="tDate">{item.date}</p>
+          <h3 className="tTitle">{item.trainingName}</h3>
+          <p className="tDate">
+            {formatDate(item.startDate)} - {formatEndDate(item.endDate)}
+          </p>
           <p className="tUser">
             <UserOutlined className="iconCard" />
-            {item.trainerUser}
+            {item.author}
           </p>
         </Col>
       </Row>
@@ -52,8 +87,5 @@ const MyTrainingCardCom = (props) => {
     </Card>
   );
 };
-// function MyTrainingCardCom(Item) {
-
-// }
 
 export default MyTrainingCardCom;

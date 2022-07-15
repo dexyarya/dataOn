@@ -1,20 +1,21 @@
 import "./App.css";
-import MyTrainingCard from "./components/MyTrainingCard/MyTrainingCard";
 import TrainingEventList from "./components/TrainingEventList";
 import FilterSection from "./components/FilterSection";
-import AllTrainingEvent from "./components/AllTrainingEvent";
-import MyTrainingTableView from "./components/MyTrainingTableView/MyTrainingTableView";
-import AllTrainingTableView from "./components/AllTrainingTableView/AllTrainingTableView";
+import ToggleView from "./components/ToggleView/ToggleView";
+import { useState } from "react";
 
 function App() {
+  const [tableViews, setTableView] = useState(false);
+
+  const handleClick = () => {
+    setTableView(!tableViews);
+  };
+
   return (
     <div className="App">
       <TrainingEventList />
-      <FilterSection />
-      <MyTrainingCard />
-      <AllTrainingEvent />
-      <MyTrainingTableView />
-      <AllTrainingTableView />
+      <FilterSection handleClick={handleClick} tableView={tableViews} />
+      <ToggleView tableView={tableViews} />
     </div>
   );
 }

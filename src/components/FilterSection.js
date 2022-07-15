@@ -1,8 +1,9 @@
 import React from "react";
 import { Row, Card, Input, Select, Switch, Button, Col } from "antd";
-import { UnorderedListOutlined } from "@ant-design/icons";
+import ButtonTog from "./ToggleView/ButtonTog";
+import ButtonToge from "./ToggleView/ButtonToge";
 
-const FileterSection = () => {
+const FileterSection = ({ handleClick, tableView }) => {
   const { Option } = Select;
   const onChange = (checked) => {
     console.log(`checked = ${checked}`);
@@ -11,8 +12,9 @@ const FileterSection = () => {
   return (
     <Card
       style={{
-        margin: "15px",
+        margin: "10px",
         borderRadius: "10px",
+        paddingRight: "20px",
       }}
     >
       <Row justify="space-between" wrap>
@@ -66,9 +68,8 @@ const FileterSection = () => {
 
         <Col xl={2}>
           <Row style={{ marginTop: 30 }}>
-            <Button>
-              <UnorderedListOutlined />
-              View as List
+            <Button onClick={handleClick}>
+              {tableView ? <ButtonTog /> : <ButtonToge />}
             </Button>
           </Row>
         </Col>

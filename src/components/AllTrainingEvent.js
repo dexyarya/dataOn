@@ -24,7 +24,7 @@ const AllTrainingEvent = () => {
     <div>
       <Card
         style={{
-          margin: "15px",
+          margin: "10px",
           borderRadius: "10px",
           // height: 5,
         }}
@@ -32,14 +32,22 @@ const AllTrainingEvent = () => {
           <Badge
             title="All Training Event"
             className="site-badge-count-109"
-            count="99+"
-            offset={[25, 20]}
+            count="103"
+            offset={[23, 16]}
             color="#e6f7ff"
             style={{
-              textColor: "#2db7f5",
+              backgroundColor: "#D6EFED",
+              color: "#40a9ff",
             }}
           >
-            <h2>All Training Event</h2>
+            <div
+              style={{
+                fontSize: "18px",
+                fontWeight: "bold",
+              }}
+            >
+              All Training Event
+            </div>
           </Badge>
         }
       >

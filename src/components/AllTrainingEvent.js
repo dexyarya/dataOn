@@ -1,24 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CardTrainingEvent from "./CardTrainingEvent";
 import { Card, Badge, List, Row, Col, Divider } from "antd";
-import dataCard from "./dataAllTraining";
+
 import InfiniteScroll from "react-infinite-scroll-component";
+import instace from "../API";
 
 const AllTrainingEvent = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  const nextData = () => {
-    if (loading) return;
-    setLoading(true);
+  // const nextData = () => {
+  //   if (loading) return;
+  //   setLoading(true);
 
-    setTimeout(() => {
-      // const Data = dataCard.slice(0, -5);
-      const Data = dataCard;
-      setData([...Data]);
-      setLoading(false);
-    }, 1500);
-  };
+  //   setTimeout(() => {
+  //     // const Data = dataCard.slice(0, -5);
+  //     const Data = dataCard;
+  //     setData([...Data]);
+  //     setLoading(false);
+  //   }, 1500);
+  // };
+
+  async function nextData() {
+    try {
+      const response = await instace.get("trainings");
+      setData([...data, ...response.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    nextData();
+  }, []);
 
   return (
     <div>
@@ -32,7 +45,7 @@ const AllTrainingEvent = () => {
           <Badge
             title="All Training Event"
             className="site-badge-count-109"
-            count="103"
+            count={data.length}
             offset={[23, 16]}
             color="#e6f7ff"
             style={{
@@ -77,7 +90,7 @@ const AllTrainingEvent = () => {
               lg: 4,
               xl: 5,
             }}
-            dataSource={dataCard}
+            dataSource={data}
             renderItem={(item) => (
               <List.Item>
                 <Row justify="space-between">

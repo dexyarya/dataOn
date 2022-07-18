@@ -15,15 +15,24 @@ function App() {
 
   return (
     <div className="App">
-      <TrainingEventList />
-      <FilterSection handleClick={handleClick} tableView={tableViews} />
-      <ToggleView tableView={tableViews} />
+      {/* <FilterSection handleClick={handleClick} tableView={tableViews} /> */}
+      {/* <ToggleView tableView={tableViews} /> */}
       <Router>
+        <TrainingEventList />
         <Routes>
           <Route
-            path="/CreateTrainingEvent"
-            element={<CreateTrainingEvent />}
+            path="/"
+            element={
+              <>
+                <FilterSection
+                  handleClick={handleClick}
+                  tableView={tableViews}
+                />
+                <ToggleView tableView={tableViews} />{" "}
+              </>
+            }
           />
+          <Route path="/create" element={<CreateTrainingEvent />} />
         </Routes>
       </Router>
     </div>

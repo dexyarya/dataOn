@@ -1,8 +1,10 @@
 import React from "react";
 import { Breadcrumb, Card, Row, Col, Button } from "antd";
 import { PlusOutlined, MoreOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 function TrainingEventList() {
+  const navigate = useNavigate();
   return (
     <Card
       className="card"
@@ -30,6 +32,10 @@ function TrainingEventList() {
               type="primary"
               style={{
                 borderRadius: "5px",
+              }}
+              const
+              onClick={() => {
+                navigate("/create");
               }}
             >
               <PlusOutlined /> Create Training Event

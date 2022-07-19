@@ -4,7 +4,6 @@ import { Card, Badge } from "antd";
 import MyTrainingCardCom from "./MyTrainingCardCom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-// import Instance from "../../utils/axios";
 import Instance from "../../API";
 
 function MyTrainingCard() {

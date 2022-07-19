@@ -1,7 +1,7 @@
 import { Table, Card, Badge, Rate } from "antd";
 import React from "react";
 import "./MyTrainingTableView.css";
-import Instance from "../../utils/axios";
+import Instance from "../../API";
 import { useEffect, useState } from "react";
 
 const MyTrainingTableView = () => {

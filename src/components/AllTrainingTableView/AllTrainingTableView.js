@@ -1,17 +1,50 @@
 import { Table, Card, Badge, Rate } from "antd";
 import React, { useState, useEffect } from "react";
 import "../MyTrainingTableView/MyTrainingTableView.css";
-// import { columns } from "./AllTrainingTableViewData";
 import instace from "../../API";
 
 const AllTrainingTableView = () => {
   const [data, setData] = useState([]);
 
+  const covertdate = (date, text) => {
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const dateFormat = new Date(date);
+    const day = dateFormat.getDate();
+    const month = monthNames[dateFormat.getMonth() + 1];
+    const year = dateFormat.getFullYear();
+    const hour =
+      (dateFormat.getHours() < 10 ? "0" : "") + dateFormat.getHours();
+    const minute =
+      (dateFormat.getMinutes() < 10 ? "0" : "") + dateFormat.getMinutes();
+    console.log("ini data" + text.endDate);
+
+    const endFormat = new Date(text.endDate);
+
+    const hourEnd =
+      (endFormat.getHours() < 10 ? "0" : "") + endFormat.getHours();
+    const minuteEnd =
+      (endFormat.getMinutes() < 10 ? "0" : "") + endFormat.getMinutes();
+    return `${day} ${month} ${year}, ${hour}:${minute} - ${hourEnd}:${minuteEnd}`;
+  };
+
   async function getData() {
     try {
       const response = await instace.get("trainings");
       setData([...response.data]);
-      // console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -40,21 +73,28 @@ const AllTrainingTableView = () => {
     {
       title: "Event Period",
       dataIndex: "startDate",
-      key: "startDate",
-      sorter: (a, b) => new Date(a.eventPeriod) - new Date(b.eventPeriod),
+      key: "eventPeriod",
+      sorter: (a, b) => new Date(a.startdate) - new Date(b.StartDate),
+      render: covertdate,
     },
     {
       title: "Training Type",
-      dataIndex: "eventType",
+      dataIndex: "isOnline",
       key: "eventType",
-      sorter: (a, b) => a.eventType.localeCompare(b.eventType),
+
+      render: (text) => {
+        return <span>{text ? "Online Class" : "Offline Class"}</span>;
+      },
     },
 
     {
       title: "Rating",
       dataIndex: "ratings",
       key: "ratings",
-      render: (text) => <Rate disabled defaultValue={text} />,
+      render: (text) => {
+        const data = text / 20;
+        return <Rate disabled allowHalf defaultValue={data} />;
+      },
     },
     {
       title: "Trainier Name",

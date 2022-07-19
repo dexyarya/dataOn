@@ -7,19 +7,6 @@ import instace from "../API";
 
 const AllTrainingEvent = () => {
   const [data, setData] = useState([]);
-
-  // const nextData = () => {
-  //   if (loading) return;
-  //   setLoading(true);
-
-  //   setTimeout(() => {
-  //     // const Data = dataCard.slice(0, -5);
-  //     const Data = dataCard;
-  //     setData([...Data]);
-  //     setLoading(false);
-  //   }, 1500);
-  // };
-
   async function nextData() {
     try {
       const response = await instace.get("trainings");

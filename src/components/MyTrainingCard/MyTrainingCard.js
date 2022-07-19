@@ -1,62 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./MyTrainingCard.css";
 import { Card, Badge } from "antd";
 import MyTrainingCardCom from "./MyTrainingCardCom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
-const dataCard = [
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIQUqxMXUiWU6PnFRSFgGRuRDYtYY7BqLLIg&usqp=CAU",
-    location: "DataOn Simprung, Jakarta Selatan, ID",
-    title: "Training Angular",
-    date: "9 Jun 2022, 15:00 - 18.00",
-    trainerUser: "Juwitha Susanti",
-  },
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9UfyA4yy9oUylT_fvBycqvjXVeunHkXn71Q&usqp=CAU",
-    location: "Online Event",
-    title: "Seminar QA",
-    date: "7 Jul 2022, 15:00 - 18.00",
-    trainerUser: "Susanti Cytia",
-  },
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScV7uuMEeglB28FjNYc1rxOFaKAjm_PYhIHA&usqp=CAU",
-    location: "Nissi Bintaro Campus, Tangerang",
-    title: "Training Golang",
-    date: "9 Jan 2022, 15:00 - 18.00",
-    trainerUser: "Spiderman",
-  },
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScV7uuMEeglB28FjNYc1rxOFaKAjm_PYhIHA&usqp=CAU",
-    location: "Nissi Bintaro Campus, Tangerang",
-    title: "Training Golang",
-    date: "9 Feb 2022, 15:00 - 18.00",
-    trainerUser: "Badman",
-  },
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScV7uuMEeglB28FjNYc1rxOFaKAjm_PYhIHA&usqp=CAU",
-    location: "Nissi Bintaro Campus, Tangerang",
-    title: "Training Golang",
-    date: "9 Mar 2022, 15:00 - 18.00",
-    trainerUser: "Iron Man",
-  },
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScV7uuMEeglB28FjNYc1rxOFaKAjm_PYhIHA&usqp=CAU",
-    location: "Nissi Bintaro Campus, Tangerang",
-    title: "Training Golang",
-    date: "9 Apr 2022, 15:00 - 18.00",
-    trainerUser: "Juwitha Susanti",
-  },
-];
+import instace from "../../API";
 
 function MyTrainingCard() {
+  const [items, setItems] = useState([]);
+  async function getData() {
+    try {
+      const response = await instace.get("my-training");
+      setItems([...items, ...response.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    getData();
+  }, []);
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -76,6 +39,7 @@ function MyTrainingCard() {
       items: 1,
     },
   };
+
   return (
     <>
       <Card
@@ -95,8 +59,8 @@ function MyTrainingCard() {
 
         <div className="carousel">
           <Carousel responsive={responsive}>
-            {dataCard.map((item, index) => (
-              <MyTrainingCardCom key={index} item={item} />
+            {items.map((item, id) => (
+              <MyTrainingCardCom key={id} item={item} />
             ))}
           </Carousel>
         </div>

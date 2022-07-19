@@ -1,12 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MyTrainingCard.css";
 import { Card, Badge } from "antd";
 import MyTrainingCardCom from "./MyTrainingCardCom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Instance from "../../API";
+import instace from "../../API";
 
 function MyTrainingCard() {
+  const [items, setItems] = useState([]);
+  async function getData() {
+    try {
+      const response = await instace.get("my-training");
+      setItems([...items, ...response.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    getData();
+  }, []);
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -26,19 +39,6 @@ function MyTrainingCard() {
       items: 1,
     },
   };
-
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    Instance.get("my-training")
-      .then((response) => {
-        const data = response.data;
-        setItems([...items, ...data]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <>

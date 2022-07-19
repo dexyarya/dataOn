@@ -6,7 +6,7 @@ import {
   GlobalOutlined,
   StarFilled,
 } from "@ant-design/icons";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import "./ardTrainingEvent.css";
 
 const covertdate = (date) => {
@@ -118,12 +118,13 @@ function CardTrainingEvent(props) {
   );
 }
 
-// CardTrainingEvent.propTypes = {
-//   location: PropTypes.string.isRequired,
-//   img: PropTypes.string.isRequired,
-//   title: PropTypes.string.isRequired,
-//   description: PropTypes.string.isRequired,
-//   people: PropTypes.number.isRequired,
-// };
+CardTrainingEvent.propTypes = {
+  eventName: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  participant: PropTypes.number.isRequired,
+  endDate: PropTypes.number.isRequired,
+  createdAt: PropTypes.number.isRequired,
+};
 
 export default CardTrainingEvent;

@@ -1,7 +1,7 @@
 import { Table, Card, Badge, Rate } from "antd";
 import React from "react";
 import "./MyTrainingTableView.css";
-import Instance from "../../API";
+import instace from "../../API";
 import { useEffect, useState } from "react";
 
 const MyTrainingTableView = () => {
@@ -35,17 +35,16 @@ const MyTrainingTableView = () => {
   };
 
   const [items, setItems] = useState([]);
-
+  async function getData() {
+    try {
+      const response = await instace.get("my-training");
+      setItems([...items, ...response.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
-    Instance.get("my-training")
-      .then((response) => {
-        const data = response.data;
-        setItems([...items, ...data]);
-        // console.log(data[0].endDate);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    getData();
   }, []);
 
   const columns = [
@@ -63,7 +62,6 @@ const MyTrainingTableView = () => {
       render: (text) => {
         return <span>{text ? "Online Class" : "Offline Class"}</span>;
       },
-      // sorter: (a, b) => a.isOnline.localeCompare(b.isOnline),
     },
     {
       title: "Event Period",

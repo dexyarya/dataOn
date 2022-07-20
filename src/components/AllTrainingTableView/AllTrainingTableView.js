@@ -5,6 +5,8 @@ import instace from "../../API";
 
 const AllTrainingTableView = () => {
   const [data, setData] = useState([]);
+  const [totalPage, setTotalPages] = useState(1);
+  const [pages, setPages] = useState(1);
 
   const covertdate = (date, text) => {
     const monthNames = [
@@ -30,8 +32,6 @@ const AllTrainingTableView = () => {
       (dateFormat.getHours() < 10 ? "0" : "") + dateFormat.getHours();
     const minute =
       (dateFormat.getMinutes() < 10 ? "0" : "") + dateFormat.getMinutes();
-    console.log("ini data" + text.endDate);
-
     const endFormat = new Date(text.endDate);
 
     const hourEnd =
@@ -43,17 +43,24 @@ const AllTrainingTableView = () => {
 
   async function getData() {
     try {
-      const response = await instace.get("trainings");
+      const response = await instace.get(`trainings?page=${pages}&limit=10`);
       setData([...response.data]);
+      setTotalPages(50);
+      // console.log(response.status);
     } catch (err) {
       console.log(err);
     }
   }
-
-  console.log(data);
   useEffect(() => {
     getData();
   }, []);
+
+  const setPagination = (page) => {
+    setPages(page);
+  };
+  useEffect(() => {
+    getData();
+  }, [pages]);
 
   const columns = [
     {
@@ -122,7 +129,7 @@ const AllTrainingTableView = () => {
           All Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count={data.length}
+            count="50"
             style={{ backgroundColor: "#D6EFED", color: "#40a9ff" }}
           />
         </div>
@@ -132,8 +139,13 @@ const AllTrainingTableView = () => {
           dataSource={data}
           size={"small"}
           pagination={{
-            defaultPageSize: 10,
+            defaultCurrent: 1,
+            PageSize: 10,
             size: "default",
+            total: totalPage,
+            onChange: (page) => {
+              setPagination(page);
+            },
           }}
           className="tableClass"
         />

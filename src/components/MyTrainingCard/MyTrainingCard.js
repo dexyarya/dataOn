@@ -52,7 +52,7 @@ function MyTrainingCard() {
           My Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count={74}
+            count={items.length}
             style={{ backgroundColor: "#D6EFED", color: "#40a9ff" }}
           />
         </div>

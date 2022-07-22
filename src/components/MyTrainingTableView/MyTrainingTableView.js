@@ -27,10 +27,13 @@ const MyTrainingTableView = () => {
     const hour = (newDate.getHours() < 10 ? "0" : " ") + newDate.getHours();
     const minute =
       (newDate.getMinutes() < 10 ? "0" : " ") + newDate.getMinutes();
-    const endHour = text.endDate.split(":")[1];
-    console.log(text.endDate);
-    const endMinute = text.endDate.split(":")[2].split(".")[0];
-    const dateToday = `${day} ${month} ${year}, ${hour}:${minute} - ${endHour}:${endMinute}`;
+
+    const endFormat = new Date(text.endDate);
+    const hourEnd =
+      (endFormat.getHours() < 10 ? "0" : "") + endFormat.getHours();
+    const minuteEnd =
+      (endFormat.getMinutes() < 10 ? "0" : "") + endFormat.getMinutes();
+    const dateToday = `${day} ${month} ${year}, ${hour}:${minute} - ${hourEnd}:${minuteEnd}`;
     return dateToday;
   };
 

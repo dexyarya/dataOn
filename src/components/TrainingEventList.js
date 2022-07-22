@@ -1,6 +1,7 @@
 import React from "react";
 import { Breadcrumb, Card, Row, Col, Button } from "antd";
 import { PlusOutlined, MoreOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 function TrainingEventList() {
   return (
@@ -26,14 +27,16 @@ function TrainingEventList() {
 
         <Row justify="space-between">
           <Col>
-            <Button
-              type="primary"
-              style={{
-                borderRadius: "5px",
-              }}
-            >
-              <PlusOutlined /> Create Training Event
-            </Button>
+            <Link to="/create">
+              <Button
+                type="primary"
+                style={{
+                  borderRadius: "5px",
+                }}
+              >
+                <PlusOutlined /> Create Training Event
+              </Button>
+            </Link>
           </Col>
 
           <Col style={{ marginLeft: "10px" }}>

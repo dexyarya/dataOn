@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Row, Col, Tooltip, Button } from "antd";
+import React, { useState } from "react";
+import { Card, Row, Col, Tooltip, Button, Modal, Image } from "antd";
 import {
   UserOutlined,
   EnvironmentOutlined,
@@ -8,6 +8,8 @@ import {
 } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import "./ardTrainingEvent.css";
+import { useNavigate } from "react-router-dom";
+import instace from "../API";
 
 const covertdate = (date) => {
   const monthNames = [
@@ -45,7 +47,52 @@ const endDate = (endDate) => {
 
 function CardTrainingEvent(props) {
   const joinText = "You've joined this class";
-  const isOnline = props.isOnline;
+  const isOnline = props.isOnline === "true" ? "Online" : "Offline";
+  const Navigate = useNavigate();
+  const id = props.id;
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalDelete, setIsModalDelete] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  const handleCancelDelete = () => {
+    setIsModalDelete(false);
+  };
+
+  const handleDelete = () => {
+    setIsModalVisible(false);
+    setIsModalDelete(true);
+  };
+
+  const handleDalateModals = () => {
+    setIsModalDelete(false);
+
+    const response = instace.delete(`/trainings/${id}`);
+    response
+      .then((res) => {
+        console.log(res);
+
+        if (res.status === 200) {
+          alert("Training Event berhasil dihapus");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Training Event gagal dihapus");
+      });
+  };
+
+  const handleUpdate = () => {
+    Navigate(`/edit/${id}`);
+  };
+
   return (
     <div>
       <Tooltip
@@ -81,6 +128,8 @@ function CardTrainingEvent(props) {
         }
       >
         <Card
+          onClick={showModal}
+          hoverable
           style={{
             minWidth: 15,
             fontSize: "90%",
@@ -104,7 +153,7 @@ function CardTrainingEvent(props) {
           <h3 className="title">{props.eventName}</h3>
           <p className="description" style={{ marginBottom: "0" }}>
             {/* {props.description} */}
-            {covertdate(props.createdAt)} - {endDate(props.endDate)}
+            {covertdate(props.startDate)} - {endDate(props.endDate)}
           </p>
           <Row justify="between">
             <Col>
@@ -114,6 +163,62 @@ function CardTrainingEvent(props) {
           </Row>
         </Card>
       </Tooltip>
+
+      <Modal
+        onCancel={handleCancel}
+        visible={isModalVisible}
+        footer={[
+          <Button key="delete" type="danger" onClick={handleDelete}>
+            Delete
+          </Button>,
+          <Button key="update" type="success" onClick={handleUpdate}>
+            Edit
+          </Button>,
+          <Button key="back" onClick={handleCancel} type="primary">
+            Cancle
+          </Button>,
+        ]}
+      >
+        <Row className="cardTrainingEvent">
+          <Col>
+            <Image width={150} height={140} src={props.image} />
+          </Col>
+          <Col className="textContent">
+            <p className="tLocation">
+              {isOnline ? (
+                <GlobalOutlined className="icon" />
+              ) : (
+                <EnvironmentOutlined className="icon" />
+              )}
+              {/* <EnvironmentOutlined className="iconCard" /> */}
+              {props.location}
+            </p>
+            <h3 className="tTitle">{props.eventName}</h3>
+            <p className="tDate">
+              {covertdate(props.startDate)} - {endDate(props.endDate)}
+            </p>
+            <p className="tUser">
+              <UserOutlined className="iconCard" />
+              {props.speaker}
+            </p>
+          </Col>
+        </Row>
+      </Modal>
+
+      <Modal
+        onCancel={handleCancelDelete}
+        visible={isModalDelete}
+        footer={[
+          <Button key="back" onClick={handleDalateModals} type="danger">
+            Delete
+          </Button>,
+          <Button key="back" onClick={handleCancelDelete} type="primary">
+            Cancle
+          </Button>,
+        ]}
+      >
+        <h2>Do You Want Delete {props.eventName} </h2>
+      </Modal>
     </div>
   );
 }

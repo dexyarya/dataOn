@@ -125,7 +125,7 @@ const columns = [
     title: "No",
     dataIndex: "no",
     key: "no",
-    render: (text, record, index) => index + 1,
+    render: (index) => index + 1,
     align: "center",
   },
   {

@@ -5,9 +5,15 @@ import FilterSection from "./components/FilterSection";
 import ToggleView from "./components/ToggleView/ToggleView";
 import { useState } from "react";
 import CreateTrainingEvent from "./components/CreateTrainingEvent/CreateTrainingEvent";
+import ModalView from "./components/ModalView";
 
 function App() {
   const [tableViews, setTableView] = useState(false);
+  const [modalViews, setModalView] = useState(false);
+
+  const handleOk = () => {
+    setModalView(false);
+  };
 
   const handleClick = () => {
     setTableView(!tableViews);
@@ -15,8 +21,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <FilterSection handleClick={handleClick} tableView={tableViews} /> */}
-      {/* <ToggleView tableView={tableViews} /> */}
       <Router>
         <TrainingEventList />
         <Routes>
@@ -29,10 +33,14 @@ function App() {
                   tableView={tableViews}
                 />
                 <ToggleView tableView={tableViews} />{" "}
+                <ModalView modalViews={modalViews} handleOk={handleOk} />
               </>
             }
           />
-          <Route path="/create" element={<CreateTrainingEvent />} />
+          <Route
+            path="/create"
+            element={<CreateTrainingEvent setModalView={setModalView} />}
+          />
         </Routes>
       </Router>
     </div>

@@ -5,23 +5,12 @@ import {
   Select,
   Input,
   Button,
-  Upload,
   DatePicker,
-  Divider,
-  Radio,
   InputNumber,
-  message,
-  // Modal,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-// import { Link } from "react-router-dom";
 import instace from "../../API";
-// import { Route, Router, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
-// const Navigate = useNavigate();
-// const Link = Link();
-// import { useHistory } from "react-router-dom";
-// let history = useHistory();
 
 const { Option } = Select;
 const formItemLayout = {
@@ -43,7 +32,8 @@ const formItemLayout = {
   },
 };
 
-const CreateTrainingEvent = () => {
+const CreateTrainingEvent = ({ setModalView }) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     trainingName: "",
     startDate: "",
@@ -74,9 +64,6 @@ const CreateTrainingEvent = () => {
       startDate: valueOfInput1,
       endDate: valueOfInput2,
     });
-
-    console.log("start date", valueOfInput1);
-    console.log("end date", valueOfInput2);
   };
 
   const handleChange = (e) => {
@@ -105,42 +92,16 @@ const CreateTrainingEvent = () => {
     try {
       let response = await instace.post("my-training", post);
       console.log(response);
-      alert("data berhasil di buat");
+      navigate("/");
+      setModalView(true);
     } catch (error) {
       console.error(error);
-      alert("data tidak berhasil di buat");
     }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
-  const props = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
-
-  // const success = () => {
-  //   Modal.success({
-  //     content: "Data Berhasil di Buat",
-  //   });
-  // };
 
   return (
     <Card
@@ -224,40 +185,6 @@ const CreateTrainingEvent = () => {
           </Form.Item>
         </Form.Item>
         <Form.Item
-          value={form.providerType}
-          onChange={handleChange}
-          label="Provider Type"
-          name="providerType"
-          rules={[{ required: true, message: "Please select provider type" }]}
-        >
-          <Radio.Group>
-            <Radio.Button value="a">Internal</Radio.Button>
-            <Radio.Button value="b">External</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item
-          onChange={handleChange}
-          label="Provider"
-          name="provider"
-          rules={[{ required: true, message: "Please select provider" }]}
-        >
-          <Select value={form.provider} style={{ maxWidth: 450 }}>
-            <Option value="1">provider 1</Option>
-            <Option value="2">provider 2</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          value={form.image}
-          onChange={handleChange}
-          label="Image"
-          name="image"
-          rules={[{ required: true, message: "Please upload event thumbnail" }]}
-        >
-          <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item
           value={form.date}
           label="Date"
           name="date"
@@ -270,27 +197,11 @@ const CreateTrainingEvent = () => {
             onChange={handleChangeDate}
           />
         </Form.Item>
-        <Form.Item
-          value={form.status}
-          onChange={handleChange}
-          label="Status"
-          name="status"
-          rules={[{ required: true, message: "Please select status" }]}
-        >
-          <Radio.Group>
-            <Radio.Button value="a">Draft</Radio.Button>
-            <Radio.Button value="b">Open For Registration</Radio.Button>
-            <Radio.Button value="c">Closed For Registration</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Divider />
-        {/* <Link to="/"> */}
         <Form.Item style={{ float: "right" }}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
-        {/* </Link> */}
       </Form>
     </Card>
   );

@@ -30,6 +30,7 @@ const AllTrainingEvent = () => {
         style={{
           margin: "10px",
           borderRadius: "10px",
+          // height: 5,
         }}
         title={
           <Badge

@@ -5,12 +5,11 @@ import {
   Select,
   Input,
   Button,
-  Upload,
   DatePicker,
-  Divider,
-  Radio,
+  InputNumber,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import instace from "../../API";
+import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
@@ -33,25 +32,70 @@ const formItemLayout = {
   },
 };
 
-const CreateTrainingEvent = () => {
+const CreateTrainingEvent = ({ setModalView }) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
+    trainingName: "",
+    startDate: "",
+    endDate: "",
+    image: "",
+    author: "",
+    location: "",
+    ratings: "",
+    isOnline: "",
+    isOffline: "",
+    information: "",
+    participant: "",
     eventType: "",
-    trainingCoures: "",
-    eventName: "",
-    providerType: "",
-    provider: "",
-    eventThubnail: "null",
-    status: "",
-    date: "",
   });
 
-  const onChange = () => {
+  const handleChanges = (v, e) => {
     setForm({
       ...form,
+      eventType: e.value,
     });
   };
-  const handlesubmit = (e) => {
-    e.preventDefault();
+
+  const handleChangeDate = (range) => {
+    const valueOfInput1 = range[0].format();
+    const valueOfInput2 = range[1].format();
+    setForm({
+      ...form,
+      startDate: valueOfInput1,
+      endDate: valueOfInput2,
+    });
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setForm({
+      ...form,
+      [e.target.id]: value,
+    });
+  };
+
+  const handlesubmit = async () => {
+    const post = {
+      image:
+        "https://s3-ap-southeast-1.amazonaws.com/dressup/test/upload-images/image-1649837020.jpeg",
+      endDate: form.endDate,
+      ratings: form.ratings,
+      author: form.author,
+      location: form.location,
+      trainingName: form.trainingName,
+      startDate: form.startDate,
+      information: form.information,
+      participant: form.participant,
+      isOnline: form.eventType === "isOnline" ? true : false,
+      isOffline: form.eventType === "isOffline" ? true : false,
+    };
+    try {
+      await instace.post("my-training", post);
+      navigate("/");
+      setModalView(true);
+    } catch {
+      navigate("/missing");
+    }
   };
 
   return (
@@ -61,90 +105,78 @@ const CreateTrainingEvent = () => {
         borderRadius: "10px",
       }}
     >
-      <Form {...formItemLayout} onSubmit={handlesubmit}>
+      <Form {...formItemLayout} onFinish={handlesubmit}>
         <Form.Item label="Event No">TREV-YYMM-XXXX</Form.Item>
         <Form.Item
-          onChange={(e) => onChange(e.target.value)}
-          label="Event Type"
           name="eventType"
+          label="Event Type"
           rules={[{ required: true, message: "Please select event type" }]}
         >
-          <Select value={form.eventType} style={{ maxWidth: 500 }}>
-            <Option value="1">Training</Option>
-            <Option value="2">Seminar</Option>
+          <Select
+            value={form.eventType}
+            onChange={handleChanges}
+            style={{ maxWidth: 500 }}
+          >
+            <Option name="eventType" value="isOnline">
+              Online Class
+            </Option>
+            <Option name="eventType" value="isOffline">
+              Offline Class
+            </Option>
           </Select>
         </Form.Item>
         <Form.Item
-          onChange={(e) => onChange(e.target.value)}
-          label="Training Course"
-          name="trainingCourse  "
-          rules={[{ required: true, message: "Please select training course" }]}
-        >
-          <Select value={form.trainingCoures} style={{ maxWidth: 500 }}>
-            <Option value="1">Training Course 1</Option>
-            <Option value="2">Training Course 2</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          value={form.eventName}
-          onChange={(e) => onChange(e.target.value)}
-          label="Event Name"
-          name="eventName"
+          name="trainingName"
+          label="Training Name"
+          value={form.trainingName}
+          onChange={handleChange}
           rules={[{ required: true, message: "Please input event name" }]}
         >
           <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          value={form.providerType}
-          onChange={(e) => onChange(e.target.value)}
-          label="Provider Type"
-          name="providerType"
-          rules={[{ required: true, message: "Please select provider type" }]}
+          value={form.author}
+          onChange={handleChange}
+          label="Author"
+          name="author"
+          rules={[{ required: true, message: "Please input Autor" }]}
         >
-          <Radio.Group>
-            <Radio.Button value="a">Internal</Radio.Button>
-            <Radio.Button value="b">External</Radio.Button>
-          </Radio.Group>
+          <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          onChange={(e) => onChange(e.target.value)}
-          label="Provider"
-          name="provider"
-          rules={[{ required: true, message: "Please select provider" }]}
+          value={form.location}
+          onChange={handleChange}
+          label="Location"
+          name="location"
+          rules={[{ required: true, message: "Please input Location" }]}
         >
-          <Select value={form.provider} style={{ maxWidth: 450 }}>
-            <Option value="1">provider 1</Option>
-            <Option value="2">provider 2</Option>
-          </Select>
-          <Button
-            style={{
-              marginLeft: "10px",
-            }}
-          >
-            +
-          </Button>
+          <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          value={form.eventThubnail}
-          onChange={(e) => onChange(e.target.value)}
-          label="Event Thumbnails"
-          name="eventThumbnails"
-          rules={[{ required: true, message: "Please upload event thumbnail" }]}
+          value={form.information}
+          onChange={handleChange}
+          label="Information"
+          name="information"
+          rules={[{ required: true, message: "Please input Information" }]}
         >
-          <Upload name="logo" action="/upload.do" listType="pic re">
-            <Button icon={<UploadOutlined />}>Click to upload</Button>
-          </Upload>
-          <p
-            className="text-muted"
-            style={{ marginTop: "2px", color: "#bcc1c7" }}
-          >
-            Recomended image resolution is 500x300(5:3 aspect
-            ratio,max.2MB,jpg/png)
-          </p>
+          <Input style={{ maxWidth: 500 }} />
+        </Form.Item>
+        <Form.Item
+          label="Participant"
+          value={form.participant}
+          onChange={handleChange}
+        >
+          <Form.Item name="participant" noStyle>
+            <InputNumber min={1} max={100} type="number" />
+          </Form.Item>
+        </Form.Item>
+        <Form.Item label="Rating" onChange={handleChange} value={form.ratings}>
+          <Form.Item name="ratings" noStyle>
+            <InputNumber min={1} max={100} type="number" />
+          </Form.Item>
         </Form.Item>
         <Form.Item
           value={form.date}
-          onChange={(e) => onChange(e.target.value)}
           label="Date"
           name="date"
           rules={[{ required: true, message: "Please select date" }]}
@@ -152,24 +184,10 @@ const CreateTrainingEvent = () => {
           <RangePicker
             style={{ maxWidth: 300 }}
             showTime
-            format="YYYY-MM-DD HH:mm:ss"
+            format="YYYY-MM-DD HH:mm"
+            onChange={handleChangeDate}
           />
         </Form.Item>
-        <Form.Item
-          value={form.status}
-          onChange={(e) => onChange(e.target.value)}
-          label="Status"
-          name="status"
-          rules={[{ required: true, message: "Please select status" }]}
-        >
-          <Radio.Group>
-            <Radio.Button value="a">Draft</Radio.Button>
-            <Radio.Button value="b">Open For Registration</Radio.Button>
-            <Radio.Button value="c">Closed For Registration</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Divider />
-
         <Form.Item style={{ float: "right" }}>
           <Button type="primary" htmlType="submit">
             Submit

@@ -1,15 +1,21 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import TrainingEventList from "./components/TrainingEventList";
+import { useState } from "react";
+import ModalView from "./components/ModalView";
 import FilterSection from "./components/FilterSection";
 import ToggleView from "./components/ToggleView/ToggleView";
-import { useState } from "react";
-import CreateTrainingEvent from "./components/CreateTrainingEvent/CreateTrainingEvent";
-import EditTraining from "./components/EditTraining/EditTraining";
 import MissingPath from "./components/MissingPath/MissingPath";
+import TrainingEventList from "./components/TrainingEventList";
+import EditTraining from "./components/EditTraining/EditTraining";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CreateTrainingEvent from "./components/CreateTrainingEvent/CreateTrainingEvent";
 
 function App() {
   const [tableViews, setTableView] = useState(false);
+  const [modalViews, setModalView] = useState(false);
+
+  const handleOk = () => {
+    setModalView(false);
+  };
 
   const handleClick = () => {
     setTableView(!tableViews);
@@ -26,16 +32,20 @@ function App() {
               <>
                 <TrainingEventList />
                 <FilterSection
-                  handleClick={handleClick}
                   tableView={tableViews}
+                  handleClick={handleClick}
                 />
                 <ToggleView tableView={tableViews} />{" "}
+                <ModalView modalViews={modalViews} handleOk={handleOk} />
               </>
             }
           />
-          <Route path="/create" element={<CreateTrainingEvent />} />
-          <Route path="/edit/:id" element={<EditTraining />} />
+          <Route
+            path="/create"
+            element={<CreateTrainingEvent setModalView={setModalView} />}
+          />
           <Route path="/missing" element={<MissingPath />} />
+          <Route path="/edit/:id" element={<EditTraining />} />
         </Routes>
       </Router>
     </div>

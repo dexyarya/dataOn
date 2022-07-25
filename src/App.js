@@ -5,6 +5,8 @@ import FilterSection from "./components/FilterSection";
 import ToggleView from "./components/ToggleView/ToggleView";
 import { useState } from "react";
 import CreateTrainingEvent from "./components/CreateTrainingEvent/CreateTrainingEvent";
+import EditTraining from "./components/EditTraining/EditTraining";
+import MissingPath from "./components/MissingPath/MissingPath";
 
 function App() {
   const [tableViews, setTableView] = useState(false);
@@ -15,15 +17,14 @@ function App() {
 
   return (
     <div className="App">
-      {/* <FilterSection handleClick={handleClick} tableView={tableViews} /> */}
-      {/* <ToggleView tableView={tableViews} /> */}
       <Router>
-        <TrainingEventList />
         <Routes>
+          <Route path="*" exact={true} element={<MissingPath />} />
           <Route
             path="/"
             element={
               <>
+                <TrainingEventList />
                 <FilterSection
                   handleClick={handleClick}
                   tableView={tableViews}
@@ -33,6 +34,8 @@ function App() {
             }
           />
           <Route path="/create" element={<CreateTrainingEvent />} />
+          <Route path="/edit/:id" element={<EditTraining />} />
+          <Route path="/missing" element={<MissingPath />} />
         </Routes>
       </Router>
     </div>

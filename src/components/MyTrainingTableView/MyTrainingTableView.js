@@ -28,7 +28,6 @@ const MyTrainingTableView = () => {
     const minute =
       (newDate.getMinutes() < 10 ? "0" : " ") + newDate.getMinutes();
     const endHour = text.endDate.split(":")[1];
-    console.log(text.endDate);
     const endMinute = text.endDate.split(":")[2].split(".")[0];
     const dateToday = `${day} ${month} ${year}, ${hour}:${minute} - ${endHour}:${endMinute}`;
     return dateToday;

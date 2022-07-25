@@ -6,6 +6,7 @@ import ToggleView from "./components/ToggleView/ToggleView";
 import { useState } from "react";
 import CreateTrainingEvent from "./components/CreateTrainingEvent/CreateTrainingEvent";
 import ModalView from "./components/ModalView";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [tableViews, setTableView] = useState(false);
@@ -41,6 +42,7 @@ function App() {
             path="/create"
             element={<CreateTrainingEvent setModalView={setModalView} />}
           />
+          <Route path="/notFound" element={<NotFound />} />
         </Routes>
       </Router>
     </div>

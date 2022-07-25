@@ -90,17 +90,12 @@ const CreateTrainingEvent = ({ setModalView }) => {
       isOffline: form.eventType === "isOffline" ? true : false,
     };
     try {
-      let response = await instace.post("my-training", post);
-      console.log(response);
+      await instace.post("my-training", post);
       navigate("/");
       setModalView(true);
     } catch (error) {
-      console.error(error);
+      navigate("/notFound");
     }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   return (
@@ -110,11 +105,7 @@ const CreateTrainingEvent = ({ setModalView }) => {
         borderRadius: "10px",
       }}
     >
-      <Form
-        {...formItemLayout}
-        onFinish={handlesubmit}
-        onFinishFailed={onFinishFailed}
-      >
+      <Form {...formItemLayout} onFinish={handlesubmit}>
         <Form.Item label="Event No">TREV-YYMM-XXXX</Form.Item>
         <Form.Item
           name="eventType"

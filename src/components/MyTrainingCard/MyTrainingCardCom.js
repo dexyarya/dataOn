@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import "./MyTrainingCardCom.css";
 import instace from "../../API";
+import { useNavigate } from "react-router-dom";
 
 const formatDate = (date) => {
   const monthNames = [
@@ -42,6 +43,7 @@ const formatEndDate = (endDate) => {
 };
 
 const MyTrainingCardCom = (props) => {
+  const navigate = useNavigate();
   const item = props.item;
   const key = props.id;
 
@@ -70,13 +72,14 @@ const MyTrainingCardCom = (props) => {
     const response = instace.delete(`/my-training/${id}`);
     response
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           window.location.reload();
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err) {
+          navigate("/notFound");
+        }
       });
   };
 

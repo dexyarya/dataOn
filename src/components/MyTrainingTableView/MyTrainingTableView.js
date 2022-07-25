@@ -38,17 +38,34 @@ const MyTrainingTableView = () => {
   };
 
   const [items, setItems] = useState([]);
+  // const [totalPage, setTotalPages] = useState(1);
+  const [page, setPages] = useState(1);
+
+  function setPagination(value) {
+    setPages((value - 1) * 10);
+  }
   async function getData() {
+    console.log("ini item", items);
     try {
-      const response = await instace.get("my-training");
+      const response = await instace.get(`my-training?limit=10&page=${page}`);
       setItems([...items, ...response.data]);
+      // setTotalPages(44);
     } catch (err) {
       console.log(err);
     }
   }
+
   useEffect(() => {
     getData();
   }, []);
+  // function setPagination(page) {
+  //   console.log("ini page", page);
+  //   setPages(page);
+  // }
+
+  useEffect(() => {
+    getData();
+  }, [page]);
 
   const columns = [
     {
@@ -108,7 +125,7 @@ const MyTrainingTableView = () => {
           My Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count={items.length}
+            count={44}
             style={{ backgroundColor: "#D6EFED", color: "#40a9ff" }}
           />
         </div>
@@ -118,8 +135,16 @@ const MyTrainingTableView = () => {
           dataSource={items}
           size={"small"}
           pagination={{
+            defaultCurrent: 1,
             defaultPageSize: 10,
             size: "default",
+            total: 44,
+            onChange: (value) => {
+              setPagination(value);
+            },
+            // onChange: (page) => {
+            //   setPagination(page);
+            // },
           }}
           className="tableClass"
         />

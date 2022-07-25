@@ -2,6 +2,7 @@ import { Table, Card, Badge, Rate } from "antd";
 import React, { useState, useEffect } from "react";
 import "../MyTrainingTableView/MyTrainingTableView.css";
 import instace from "../../API";
+import { Navigate } from "react-router-dom";
 
 const AllTrainingTableView = () => {
   const [data, setData] = useState([]);
@@ -46,9 +47,10 @@ const AllTrainingTableView = () => {
       const response = await instace.get(`trainings?page=${pages}&limit=10`);
       setData([...response.data]);
       setTotalPages(50);
-      // console.log(response.status);
     } catch (err) {
-      console.log(err);
+      if (err) {
+        Navigate("/missing");
+      }
     }
   }
   useEffect(() => {

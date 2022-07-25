@@ -12,6 +12,7 @@ import {
   Divider,
   Radio,
   InputNumber,
+  message,
 } from "antd";
 import moment from "moment";
 const { RangePicker } = DatePicker;
@@ -37,6 +38,7 @@ const formItemLayout = {
 };
 
 const EditTraining = () => {
+  const Navigate = useNavigate();
   const [data, setData] = useState({
     eventType: "",
     eventName: "",
@@ -58,7 +60,6 @@ const EditTraining = () => {
     try {
       const response = await instace.get(`trainings/${id.id}`);
 
-      console.log("LOG", response.status);
       setData({
         eventName: response.data.eventName,
         startDate: dayjs(response.data.startDate).format("YYYY-MM-DD HH:mm"),
@@ -72,9 +73,8 @@ const EditTraining = () => {
         participant: response.data.participant,
       });
     } catch (err) {
-      console.log(err);
       if (err) {
-        window.location = "/missing";
+        Navigate("/missing");
       }
     }
   }
@@ -124,14 +124,6 @@ const EditTraining = () => {
     e.preventDefault();
   };
 
-  console.log(data);
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  const Navigate = useNavigate();
-
   const handleUpdate = async () => {
     const updateData = {
       eventName: data.eventName,
@@ -147,10 +139,11 @@ const EditTraining = () => {
     try {
       const response = await instace.put(`trainings/${id.id}`, updateData);
       if (response.status === 200) {
+        message.success("Training Updated Successfully");
         Navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      message.error("This is an error message");
     }
   };
 
@@ -161,12 +154,7 @@ const EditTraining = () => {
         borderRadius: "10px",
       }}
     >
-      <Form
-        {...formItemLayout}
-        form={form}
-        onSubmit={handlesubmit}
-        onFinishFailed={onFinishFailed}
-      >
+      <Form {...formItemLayout} form={form} onSubmit={handlesubmit}>
         <Form.Item label="Event No">TREV-YYMM-XXXX</Form.Item>
         <Form.Item
           label="Event Type"
@@ -197,11 +185,7 @@ const EditTraining = () => {
           name="location"
           rules={[{ required: true, message: "Please input Location" }]}
         >
-          <Input
-            defaultValue={data.location}
-            type="text"
-            style={{ maxWidth: 500 }}
-          />
+          <Input type="text" style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
           value={data.information}
@@ -210,7 +194,7 @@ const EditTraining = () => {
           name="information"
           rules={[{ required: true, message: "Please input Location" }]}
         >
-          <Input defaultValue={data.information} style={{ maxWidth: 500 }} />
+          <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
           label="Participant"
@@ -225,12 +209,7 @@ const EditTraining = () => {
 
         <Form.Item label="Ratings" value={data.ratings} onChange={handleChange}>
           <Form.Item name="ratings" noStyle>
-            <InputNumber
-              defaultValue={data.ratings}
-              min={1}
-              max={100}
-              type="number"
-            />
+            <InputNumber min={1} max={100} type="number" />
           </Form.Item>
         </Form.Item>
         <Form.Item

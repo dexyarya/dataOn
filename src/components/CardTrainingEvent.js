@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Tooltip, Button, Modal, Image } from "antd";
+import { Card, Row, Col, Tooltip, Button, Modal, Image, message } from "antd";
 import {
   UserOutlined,
   EnvironmentOutlined,
@@ -76,16 +76,15 @@ function CardTrainingEvent(props) {
     const response = instace.delete(`/trainings/${id}`);
     response
       .then((res) => {
-        console.log(res);
-
         if (res.status === 200) {
-          alert("Training Event berhasil dihapus");
+          message.success("Training Event berhasil dihapus");
           window.location.reload();
         }
       })
       .catch((err) => {
-        console.log(err);
-        alert("Training Event gagal dihapus");
+        if (err) {
+          message.error("Training Event gagal dihapus");
+        }
       });
   };
 
@@ -152,7 +151,6 @@ function CardTrainingEvent(props) {
 
           <h3 className="title">{props.eventName}</h3>
           <p className="description" style={{ marginBottom: "0" }}>
-            {/* {props.description} */}
             {covertdate(props.startDate)} - {endDate(props.endDate)}
           </p>
           <Row justify="between">
@@ -190,7 +188,6 @@ function CardTrainingEvent(props) {
               ) : (
                 <EnvironmentOutlined className="icon" />
               )}
-              {/* <EnvironmentOutlined className="iconCard" /> */}
               {props.location}
             </p>
             <h3 className="tTitle">{props.eventName}</h3>

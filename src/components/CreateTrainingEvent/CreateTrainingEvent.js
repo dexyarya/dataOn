@@ -52,15 +52,8 @@ const CreateTrainingEvent = () => {
   };
   const handlesubmit = (e) => {
     e.preventDefault();
-    console.log(form);
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-  // const onFinish = (values) => {
-  //   console.log("Success:", values);
-  // };
   return (
     <Card
       style={{
@@ -68,12 +61,7 @@ const CreateTrainingEvent = () => {
         borderRadius: "10px",
       }}
     >
-      <Form
-        // handlesubmit={onsubmit}
-        {...formItemLayout}
-        onSubmit={handlesubmit}
-        onFinishFailed={onFinishFailed}
-      >
+      <Form {...formItemLayout} onSubmit={handlesubmit}>
         <Form.Item label="Event No">TREV-YYMM-XXXX</Form.Item>
         <Form.Item
           onChange={(e) => onChange(e.target.value)}

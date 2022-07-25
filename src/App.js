@@ -1,10 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  // useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TrainingEventList from "./components/TrainingEventList";
 import FilterSection from "./components/FilterSection";
 import ToggleView from "./components/ToggleView/ToggleView";
@@ -15,7 +10,6 @@ import MissingPath from "./components/MissingPath/MissingPath";
 
 function App() {
   const [tableViews, setTableView] = useState(false);
-  // const Navigate = useNavigate();
 
   const handleClick = () => {
     setTableView(!tableViews);
@@ -40,7 +34,7 @@ function App() {
             }
           />
           <Route path="/create" element={<CreateTrainingEvent />} />
-          <Route path="/edit/:id*" element={<EditTraining />} />
+          <Route path="/edit/:id" element={<EditTraining />} />
           <Route path="/missing" element={<MissingPath />} />
         </Routes>
       </Router>

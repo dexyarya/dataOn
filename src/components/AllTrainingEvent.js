@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import CardTrainingEvent from "./CardTrainingEvent";
 import { Card, Badge, List, Row, Col, Divider } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import instace from "../API";
 
 const AllTrainingEvent = () => {
+  const Navigate = useNavigate();
   const [data, setData] = useState([]);
   async function nextData() {
     try {
       const response = await instace.get("trainings");
       setData([...data, ...response.data]);
     } catch (err) {
-      console.log(err);
+      if (err) {
+        Navigate("/missing");
+      }
     }
   }
 
@@ -26,7 +30,6 @@ const AllTrainingEvent = () => {
         style={{
           margin: "10px",
           borderRadius: "10px",
-          // height: 5,
         }}
         title={
           <Badge

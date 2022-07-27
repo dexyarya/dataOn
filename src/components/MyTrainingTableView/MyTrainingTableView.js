@@ -1,12 +1,11 @@
 import { Table, Card, Badge, Rate } from "antd";
 import React from "react";
 import "./MyTrainingTableView.css";
-import instace from "../../API";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../Context/context";
 
 const MyTrainingTableView = () => {
-  const navigate = useNavigate();
+  const { myTraining } = React.useContext(AppContext);
+  if (myTraining.isLoading) return <p>loading...</p>;
   const formatDate = (date, text) => {
     const monthNames = [
       "Jan",
@@ -38,19 +37,6 @@ const MyTrainingTableView = () => {
     const dateToday = `${day} ${month} ${year}, ${hour}:${minute} - ${hourEnd}:${minuteEnd}`;
     return dateToday;
   };
-
-  const [items, setItems] = useState([]);
-  async function getData() {
-    try {
-      const response = await instace.get("my-training");
-      setItems([...items, ...response.data]);
-    } catch {
-      navigate("/missing");
-    }
-  }
-  useEffect(() => {
-    getData();
-  }, []);
 
   const columns = [
     {
@@ -110,14 +96,14 @@ const MyTrainingTableView = () => {
           My Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count={items.length}
+            count={myTraining.data.length}
             style={{ backgroundColor: "#D6EFED", color: "#40a9ff" }}
           />
         </div>
 
         <Table
           columns={columns}
-          dataSource={items}
+          dataSource={myTraining.data}
           size={"small"}
           pagination={{
             defaultPageSize: 10,

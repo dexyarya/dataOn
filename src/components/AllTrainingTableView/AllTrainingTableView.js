@@ -1,10 +1,12 @@
 import { Table, Card, Badge, Rate } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../MyTrainingTableView/MyTrainingTableView.css";
 import instace from "../../API";
 import { Navigate } from "react-router-dom";
+import { AppContext } from "../../Context/context";
 
 const AllTrainingTableView = () => {
+  const { training } = useContext(AppContext);
   const [data, setData] = useState([]);
   const [totalPage, setTotalPages] = useState(1);
   const [pages, setPages] = useState(1);
@@ -46,7 +48,7 @@ const AllTrainingTableView = () => {
     try {
       const response = await instace.get(`trainings?page=${pages}&limit=10`);
       setData([...response.data]);
-      setTotalPages(50);
+      setTotalPages(training.data.length);
     } catch (err) {
       if (err) {
         Navigate("/missing");
@@ -131,7 +133,7 @@ const AllTrainingTableView = () => {
           All Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count="50"
+            count={training.data.length}
             style={{ backgroundColor: "#D6EFED", color: "#40a9ff" }}
           />
         </div>

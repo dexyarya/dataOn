@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import CardTrainingEvent from "./CardTrainingEvent";
 import { Card, Badge, List, Row, Col, Divider } from "antd";
-import { useNavigate } from "react-router-dom";
-
+import { AppContext } from "../Context/context";
 import InfiniteScroll from "react-infinite-scroll-component";
-import instace from "../API";
 
 const AllTrainingEvent = () => {
-  const Navigate = useNavigate();
-  const [data, setData] = useState([]);
-  async function nextData() {
-    try {
-      const response = await instace.get("trainings");
-      setData([...data, ...response.data]);
-    } catch (err) {
-      if (err) {
-        Navigate("/missing");
-      }
-    }
-  }
-
-  useEffect(() => {
-    nextData();
-  }, []);
+  const { training } = useContext(AppContext);
+  if (training.isLoading) return <p>loading...</p>;
 
   return (
     <div>
@@ -36,7 +20,7 @@ const AllTrainingEvent = () => {
           <Badge
             title="All Training Event"
             className="site-badge-count-109"
-            count={data.length}
+            count={training.data.length}
             offset={[23, 16]}
             color="#e6f7ff"
             style={{
@@ -56,9 +40,9 @@ const AllTrainingEvent = () => {
         }
       >
         <InfiniteScroll
-          dataLength={data.length}
-          hasMore={data.length < 10}
-          next={nextData}
+          dataLength={training.data.length}
+          hasMore={training.data.length < 10}
+          next={training.data}
           loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>
@@ -81,7 +65,7 @@ const AllTrainingEvent = () => {
               lg: 4,
               xl: 5,
             }}
-            dataSource={data}
+            dataSource={training.data}
             renderItem={(item) => (
               <List.Item>
                 <Row justify="space-between">

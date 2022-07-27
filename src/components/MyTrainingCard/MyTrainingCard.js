@@ -5,15 +5,17 @@ import MyTrainingCardCom from "./MyTrainingCardCom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import instace from "../../API";
+import { useNavigate } from "react-router-dom";
 
 function MyTrainingCard() {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   async function getData() {
     try {
       const response = await instace.get("my-training");
       setItems([...items, ...response.data]);
-    } catch (err) {
-      console.log(err);
+    } catch {
+      navigate("/missing");
     }
   }
   useEffect(() => {
@@ -52,7 +54,7 @@ function MyTrainingCard() {
           My Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count={74}
+            count={items.length}
             style={{ backgroundColor: "#D6EFED", color: "#40a9ff" }}
           />
         </div>

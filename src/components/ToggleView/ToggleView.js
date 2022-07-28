@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import MyTrainingCard from "../MyTrainingCard/MyTrainingCard";
 import MyTrainingTableView from "../MyTrainingTableView/MyTrainingTableView";
 import AllTrainingTableView from "../AllTrainingTableView/AllTrainingTableView";
 import AllTrainingEvent from "../AllTrainingEvent";
+import { AppContext } from "../../Context/context";
 
-class ToggleView extends React.Component {
-  render() {
-    return (
-      <div>
-        {this.props.tableView ? <MyTrainingTableView /> : <MyTrainingCard />}
-        {this.props.tableView ? <AllTrainingTableView /> : <AllTrainingEvent />}
-      </div>
-    );
-  }
+function ToggleView() {
+  const { search, tableViews } = useContext(AppContext);
+  return (
+    <div>
+      {tableViews ? <MyTrainingTableView /> : <MyTrainingCard />}
+      {tableViews ? (
+        <AllTrainingTableView />
+      ) : (
+        <AllTrainingEvent search={search} />
+      )}
+    </div>
+  );
 }
+
 export default ToggleView;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Card,
   Form,
@@ -10,6 +10,7 @@ import {
 } from "antd";
 import instace from "../../API";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../Context/context";
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
@@ -32,7 +33,8 @@ const formItemLayout = {
   },
 };
 
-const CreateTrainingEvent = ({ setModalView }) => {
+const CreateTrainingEvent = () => {
+  const { setModalView } = useContext(AppContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     trainingName: "",

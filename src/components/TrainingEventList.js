@@ -8,7 +8,7 @@ function TrainingEventList() {
     <Card
       className="card"
       style={{
-        margin: "10px",
+        margin: "0px 10px 10px 10px",
         borderRadius: "10px",
       }}
     >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   Card,
   Form,
@@ -8,8 +8,9 @@ import {
   DatePicker,
   InputNumber,
 } from "antd";
-import instace from "../../API";
+// import instace from "../../API";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../Context/context";
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
@@ -32,71 +33,18 @@ const formItemLayout = {
   },
 };
 
-const CreateTrainingEvent = ({ setModalView }) => {
+const CreateTrainingEvent = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    trainingName: "",
-    startDate: "",
-    endDate: "",
-    image: "",
-    author: "",
-    location: "",
-    ratings: "",
-    isOnline: "",
-    isOffline: "",
-    information: "",
-    participant: "",
-    eventType: "",
-  });
-
-  const handleChanges = (v, e) => {
-    setForm({
-      ...form,
-      eventType: e.value,
-    });
-  };
-
-  const handleChangeDate = (range) => {
-    const valueOfInput1 = range[0].format();
-    const valueOfInput2 = range[1].format();
-    setForm({
-      ...form,
-      startDate: valueOfInput1,
-      endDate: valueOfInput2,
-    });
-  };
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setForm({
-      ...form,
-      [e.target.id]: value,
-    });
-  };
-
-  const handlesubmit = async () => {
-    const post = {
-      image:
-        "https://s3-ap-southeast-1.amazonaws.com/dressup/test/upload-images/image-1649837020.jpeg",
-      endDate: form.endDate,
-      ratings: form.ratings,
-      author: form.author,
-      location: form.location,
-      trainingName: form.trainingName,
-      startDate: form.startDate,
-      information: form.information,
-      participant: form.participant,
-      isOnline: form.eventType === "isOnline" ? true : false,
-      isOffline: form.eventType === "isOffline" ? true : false,
-    };
-    try {
-      await instace.post("my-training", post);
-      navigate("/");
-      setModalView(true);
-    } catch {
-      navigate("/missing");
-    }
-  };
+  const {
+    handlesubmit,
+    handleChange,
+    handleChangeDate,
+    handleChanges,
+    form,
+    // handleUpdate,
+  } = useContext(AppContext);
+  if (form.isSucces) return navigate("/");
+  // if (form.isError) return navigate("/missing");
 
   return (
     <Card
@@ -126,19 +74,19 @@ const CreateTrainingEvent = ({ setModalView }) => {
           </Select>
         </Form.Item>
         <Form.Item
-          name="trainingName"
+          name="eventName"
           label="Training Name"
-          value={form.trainingName}
+          value={form.eventName}
           onChange={handleChange}
           rules={[{ required: true, message: "Please input event name" }]}
         >
           <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          value={form.author}
+          value={form.speaker}
           onChange={handleChange}
           label="Author"
-          name="author"
+          name="speaker"
           rules={[{ required: true, message: "Please input Autor" }]}
         >
           <Input style={{ maxWidth: 500 }} />

@@ -103,13 +103,13 @@ const MyTrainingCardCom = (props) => {
               <EnvironmentOutlined className="iconCard" />
               {item.location}
             </p>
-            <h3 className="tTitle">{item.trainingName}</h3>
+            <h3 className="tTitle">{item.eventName}</h3>
             <p className="tDate">
               {formatDate(item.startDate)} - {formatEndDate(item.endDate)}
             </p>
             <p className="tUser">
               <UserOutlined className="iconCard" />
-              {item.author}
+              {item.speaker}
             </p>
           </Col>
         </Row>

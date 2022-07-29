@@ -9,7 +9,7 @@ import {
   InputNumber,
 } from "antd";
 // import instace from "../../API";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../Context/context";
 const { RangePicker } = DatePicker;
 
@@ -34,8 +34,6 @@ const formItemLayout = {
 };
 
 const CreateTrainingEvent = () => {
-  const location = useLocation();
-  console.log("ini location", location);
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -45,10 +43,8 @@ const CreateTrainingEvent = () => {
     form,
     getData,
     data,
-    // handleUpdate,
   } = useContext(AppContext);
   if (form.isSucces) return navigate("/");
-  // if (form.isError) return navigate("/missing");
   const params = useParams();
 
   console.log("params", params);
@@ -85,7 +81,6 @@ const CreateTrainingEvent = () => {
             </Option>
           </Select>
         </Form.Item>
-        {/* <input name="eventName" defaultValue={data.eventName} /> */}
         <Form.Item
           name="eventName"
           label="Training Name"
@@ -154,7 +149,6 @@ const CreateTrainingEvent = () => {
             type={params.id ? "danger" : "primary"}
             htmlType="submit"
             onClick={() => handleSubmit(params)}
-            // onClick={() => alert(params.id)}
           >
             {params.id ? "Update" : "Submit"}
           </Button>

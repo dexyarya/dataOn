@@ -1,16 +1,12 @@
 import { createContext, useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import instace from "../API";
 import dayjs from "dayjs";
 import moment from "moment";
-// import { useParams } from "react-router-dom";
 import { Form, message } from "antd";
 
 export const AppContext = createContext(null);
 
 export const ContextWraper = (props) => {
-  // const navigate = useNavigate();
-
   const [training, setTrainingData] = useState({
     data: [],
     isLoading: false,
@@ -88,44 +84,12 @@ export const ContextWraper = (props) => {
       [e.target.id]: value,
     });
   };
-  // const params = useParams();
 
   const handleSubmit = async (e) => {
     console.log("ini ngecreate", e);
     {
       e.id ? onEdit(e.id) : onCreate();
     }
-    // if (e.id) {
-    //   onEdit();
-    // } else {
-    //   onCreate();
-    // }
-    // alert(id);
-    // console.log("ini id", id);
-    // console.log(id);
-    // const post = {
-    //   image:
-    //     "https://s3-ap-southeast-1.amazonaws.com/dressup/test/upload-images/image-1649837020.jpeg",
-    //   endDate: data.endDate,
-    //   ratings: data.ratings,
-    //   speaker: data.speaker,
-    //   location: data.location,
-    //   eventName: data.eventName,
-    //   startDate: data.startDate,
-    //   information: data.information,
-    //   participant: data.participant,
-    //   isOnline: data.eventType === "isOnline" ? true : false,
-    //   isOffline: data.eventType === "isOffline" ? true : false,
-    // };
-    // try {
-    //   await instace.post("trainings", post);
-    //   handleSetData("isSucces", false);
-    //   // navigate("/");
-    //   // setModalView(true);
-    // } catch {
-    //   // navigate("/missing");
-    //   handleSetStateCreate("isError", true);
-    // }
   };
 
   async function getData(params) {
@@ -146,19 +110,16 @@ export const ContextWraper = (props) => {
       });
     } catch (err) {
       if (err) {
-        // Navigate("/missing");
+        message.error("This is an error messagee");
       }
     }
   }
 
   const [form] = Form.useForm();
 
-  // console.log("ini param", params.id);
   form.setFieldsValue({
     eventName: data.eventName,
     date: [moment(data.startDate), moment(data.endDate)],
-    // endDate: data.endDate,
-    // startDate: data.startDate,
     image: data.image,
     eventType: data.eventType,
     location: data.location,
@@ -168,9 +129,6 @@ export const ContextWraper = (props) => {
     participant: data.participant,
   });
 
-  console.log("ini data", data);
-  console.log("ini ", form);
-
   const onEdit = async (id) => {
     alert("ini edit", id);
     const updateData = {
@@ -179,22 +137,19 @@ export const ContextWraper = (props) => {
       information: data.information,
       participant: data.participant,
       ratings: data.ratings,
-      // date: [moment(data.startDate), moment(data.endDate)],
       isOnline: data.eventType === "isOnline" ? true : false,
       isOffline: data.eventType === "isOffline" ? true : false,
       speaker: data.speaker,
       starDate: data.startDate,
       endDate: data.endDate,
     };
-    console.log("update", updateData);
     try {
       const response = await instace.put(`trainings/${id}`, updateData);
       if (response.status === 200) {
         message.success("Training Updated Successfully");
-        // Navigate("/");
       }
     } catch (err) {
-      message.error("This is an error messageeee", err);
+      message.error("This is an error messageeee");
     }
   };
 
@@ -216,50 +171,14 @@ export const ContextWraper = (props) => {
     };
     try {
       await instace.post("trainings", post);
-      // handleSetData("isSucces", false);
-      // navigate("/");
-      // setModalView(true);
     } catch {
-      // navigate("/missing");
-      // handleSetStateCreate("isError", true);
+      message.error("This is an error messageeee");
     }
   };
-
-  // const handleUpdate = async () => {
-  //   console.log("ini update");
-  // const updateData = {
-  //   eventName: data.eventName,
-  //   location: data.location,
-  //   information: data.information,
-  //   participant: data.participant,
-  //   ratings: data.ratings,
-  //   // date: [moment(data.startDate), moment(data.endDate)],
-  //   isOnline: data.eventType === "isOnline" ? true : false,
-  //   isOffline: data.eventType === "isOffline" ? true : false,
-  //   speaker: data.speaker,
-  //   starDate: data.startDate,
-  //   endDate: data.endDate,
-  // };
-  // console.log("update", updateData);
-
-  // try {
-  //   const response = await instace.put(`trainings=${id}`, updateData);
-  //   if (response.status === 200) {
-  //     message.success("Training Updated Successfully");
-  //     // Navigate("/");
-  //   }
-  // } catch (err) {
-  //   message.error("This is an error messageeee", err);
-  // }
-  // };
-  //
 
   useEffect(() => {
     getDataMyTraining();
     getDataTraining();
-    // if (params.id) {
-    //   getData();
-    // }
   }, []);
 
   const handleSetStateMyTraining = (field, value) => {
@@ -276,20 +195,6 @@ export const ContextWraper = (props) => {
     }));
   };
 
-  // const handleSetStateCreate = (field, value) => {
-  //   setData((prevState) => ({
-  //     ...prevState,
-  //     [field]: value,
-  //   }));
-  // };
-
-  // const handleSetData = (field, value) => {
-  //   setData((prevState) => ({
-  //     ...prevState,
-  //     [field]: value,
-  //   }));
-  // };
-
   return (
     <AppContext.Provider
       value={{
@@ -302,7 +207,6 @@ export const ContextWraper = (props) => {
         form,
         data,
         getData,
-        // handleUpdate,
       }}
     >
       {props.children}

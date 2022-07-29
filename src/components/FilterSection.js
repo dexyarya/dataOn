@@ -44,15 +44,15 @@ const FileterSection = () => {
 
         <Col md={4} lg={5}>
           <Row justify="space-between">
-            <Col style={{ marginBottom: "10px" }}>Event Training</Col>
+            <Col style={{ marginBottom: "10px" }}>Event Type</Col>
             <Select
               placeholder="Select Event"
               align="left"
               style={{ width: 300 }}
               onChange={handleChanges}
             >
-              <Option value="myTraining">My Training</Option>
-              <Option value="trainings">All Training</Option>
+              <Option value="Complete">Complete</Option>
+              <Option value="Not Complete">Not Complete</Option>
             </Select>
           </Row>
         </Col>
@@ -69,11 +69,10 @@ const FileterSection = () => {
               style={{ width: 300 }}
               onChange={handleChange}
             >
-              <Option value=""></Option>
               <Option name="eventType" value="isOnline">
                 Online
               </Option>
-              <Option name="eventType" value="isOffline">
+              <Option name="eventTypeof" value="isOffline">
                 Offline
               </Option>
             </Select>

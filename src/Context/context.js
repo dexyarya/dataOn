@@ -9,31 +9,39 @@ export const ContextWraper = (props) => {
     isError: false,
   });
 
+  // const [trainingType, setTrainingType] = useState("");
   const handleChanges = (v, e) => {
     e.value;
-    console.log(`checked = ${e.value}`);
+    //   console.log(e.value);
+    //   if (e.value === "Complete") {
+    //     e.value = "true";
+    //   } else {
+    //     e.value = "false";
+    //   }
+    //   // getDataTraining(e.value);
+    //   setTrainingType(e.value);
   };
-  const [setatus, setStatus] = useState("");
-  const handleChange = (v, e) => {
-    // if (e.value === "isOnline") {
-    //   e.value = true;
-    // } else {
-    //   e.value = false;
-    // }
-    getDataTraining(e.value);
 
+  const [status, setStatus] = useState("");
+  const handleChange = (v, e) => {
+    if (e.value === "isOnline") {
+      e.value = true;
+    } else {
+      e.value = false;
+    }
+
+    // getDataTraining(e.value);
     setStatus(e.value);
   };
 
-  const eventType = setatus;
-  console.log("eventType", eventType);
+  console.log("test", status);
 
-  async function getDataTraining(search = "", eventType = "") {
-    console.log("search", search);
+  async function getDataTraining(search = "", status = "") {
     handleSetStateTraining("isLoading", true);
+
     try {
       const response = await instace.get(
-        `trainings?search=${search}&filter=${eventType}`
+        `trainings?search=${search}&isOnline=${status}`
       );
       handleSetStateTraining("data", response.data);
     } catch (err) {

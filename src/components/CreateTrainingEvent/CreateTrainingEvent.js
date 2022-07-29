@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Card,
   Form,
@@ -9,7 +9,7 @@ import {
   InputNumber,
 } from "antd";
 // import instace from "../../API";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { AppContext } from "../../Context/context";
 const { RangePicker } = DatePicker;
 
@@ -34,17 +34,29 @@ const formItemLayout = {
 };
 
 const CreateTrainingEvent = () => {
+  const location = useLocation();
+  console.log("ini location", location);
   const navigate = useNavigate();
   const {
-    handlesubmit,
+    handleSubmit,
     handleChange,
     handleChangeDate,
     handleChanges,
     form,
+    getData,
+    data,
     // handleUpdate,
   } = useContext(AppContext);
   if (form.isSucces) return navigate("/");
   // if (form.isError) return navigate("/missing");
+  const params = useParams();
+
+  console.log("params", params);
+  useEffect(() => {
+    if (params.id) {
+      getData(params.id);
+    }
+  }, [params]);
 
   return (
     <Card
@@ -53,7 +65,7 @@ const CreateTrainingEvent = () => {
         borderRadius: "10px",
       }}
     >
-      <Form {...formItemLayout} onFinish={handlesubmit}>
+      <Form {...formItemLayout} form={form}>
         <Form.Item label="Event No">TREV-YYMM-XXXX</Form.Item>
         <Form.Item
           name="eventType"
@@ -61,7 +73,7 @@ const CreateTrainingEvent = () => {
           rules={[{ required: true, message: "Please select event type" }]}
         >
           <Select
-            value={form.eventType}
+            value={data.eventType}
             onChange={handleChanges}
             style={{ maxWidth: 500 }}
           >
@@ -73,26 +85,27 @@ const CreateTrainingEvent = () => {
             </Option>
           </Select>
         </Form.Item>
+        {/* <input name="eventName" defaultValue={data.eventName} /> */}
         <Form.Item
           name="eventName"
           label="Training Name"
-          value={form.eventName}
+          value={data.eventName}
           onChange={handleChange}
           rules={[{ required: true, message: "Please input event name" }]}
         >
           <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          value={form.speaker}
+          value={data.speaker}
           onChange={handleChange}
           label="Author"
           name="speaker"
           rules={[{ required: true, message: "Please input Autor" }]}
         >
-          <Input style={{ maxWidth: 500 }} />
+          <Input style={{ maxWidth: 500 }} value="tes" />
         </Form.Item>
         <Form.Item
-          value={form.location}
+          value={data.location}
           onChange={handleChange}
           label="Location"
           name="location"
@@ -101,7 +114,7 @@ const CreateTrainingEvent = () => {
           <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          value={form.information}
+          value={data.information}
           onChange={handleChange}
           label="Information"
           name="information"
@@ -111,20 +124,20 @@ const CreateTrainingEvent = () => {
         </Form.Item>
         <Form.Item
           label="Participant"
-          value={form.participant}
+          value={data.participant}
           onChange={handleChange}
         >
           <Form.Item name="participant" noStyle>
             <InputNumber min={1} max={100} type="number" />
           </Form.Item>
         </Form.Item>
-        <Form.Item label="Rating" onChange={handleChange} value={form.ratings}>
+        <Form.Item label="Rating" onChange={handleChange} value={data.ratings}>
           <Form.Item name="ratings" noStyle>
             <InputNumber min={1} max={100} type="number" />
           </Form.Item>
         </Form.Item>
         <Form.Item
-          value={form.date}
+          value={data.date}
           label="Date"
           name="date"
           rules={[{ required: true, message: "Please select date" }]}
@@ -137,8 +150,13 @@ const CreateTrainingEvent = () => {
           />
         </Form.Item>
         <Form.Item style={{ float: "right" }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button
+            type={params.id ? "danger" : "primary"}
+            htmlType="submit"
+            onClick={() => handleSubmit(params)}
+            // onClick={() => alert(params.id)}
+          >
+            {params.id ? "Update" : "Submit"}
           </Button>
         </Form.Item>
       </Form>

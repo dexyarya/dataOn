@@ -8,10 +8,29 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
   });
-  async function getDataTraining(search = "") {
+
+  const [statusTable, setStatusTable] = useState(false);
+  const handleCheck = (e) => {
+    console.log("ini", e);
+    {
+      e ? "isOnline" : "isOffline";
+    }
+    // {
+    //   e === "isOnline" ? true : false;
+    // }
+
+    setStatusTable(e);
+    console.log("tes", e);
+  };
+  console.log("ini status", statusTable);
+
+  async function getDataTraining(search = "", statusTable) {
+    console.log("ini tabel", statusTable);
     handleSetStateTraining("isLoading", true);
     try {
-      const response = await instace.get(`trainings?search=${search}`);
+      const response = await instace.get(
+        `trainings?search=${search}&isOnline=${statusTable}`
+      );
       handleSetStateTraining("data", response.data);
     } catch (err) {
       handleSetStateTraining("isError", true);
@@ -102,6 +121,7 @@ export const ContextWraper = (props) => {
         handleOk,
         handleClick,
         getDataTraining,
+        handleCheck,
       }}
     >
       {props.children}

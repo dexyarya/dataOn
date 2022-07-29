@@ -5,11 +5,12 @@ import ButtonToge from "./ToggleView/ButtonToge";
 import { AppContext } from "../Context/context";
 
 const FileterSection = () => {
-  const { getDataTraining, handleClick, tableViews } = useContext(AppContext);
+  const { getDataTraining, handleClick, tableViews, handleCheck } =
+    useContext(AppContext);
   useEffect(() => {
     getDataTraining();
   }, []);
-  console.log("initialValue", tableViews);
+  // console.log("initialValue", tableViews);
   const { Option } = Select;
   const onChange = (checked) => {
     console.log(`checked = ${checked}`);
@@ -43,9 +44,10 @@ const FileterSection = () => {
               placeholder="Select Event"
               align="left"
               style={{ width: 300 }}
+              onChange={(e) => handleCheck(e)}
             >
-              <Option value="1">Not Identified</Option>
-              <Option value="2">Closed</Option>
+              <Option value={true}>Online</Option>
+              <Option value={false}>Offline</Option>
             </Select>
           </Row>
         </Col>

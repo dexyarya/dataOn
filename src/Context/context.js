@@ -8,10 +8,33 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
   });
-  async function getDataTraining(search = "") {
+
+  const handleChanges = (v, e) => {
+    e.value;
+    console.log(`checked = ${e.value}`);
+  };
+  const [setatus, setStatus] = useState("");
+  const handleChange = (v, e) => {
+    // if (e.value === "isOnline") {
+    //   e.value = true;
+    // } else {
+    //   e.value = false;
+    // }
+    getDataTraining(e.value);
+
+    setStatus(e.value);
+  };
+
+  const eventType = setatus;
+  console.log("eventType", eventType);
+
+  async function getDataTraining(search = "", eventType = "") {
+    console.log("search", search);
     handleSetStateTraining("isLoading", true);
     try {
-      const response = await instace.get(`trainings?search=${search}`);
+      const response = await instace.get(
+        `trainings?search=${search}&filter=${eventType}`
+      );
       handleSetStateTraining("data", response.data);
     } catch (err) {
       handleSetStateTraining("isError", true);
@@ -28,7 +51,7 @@ export const ContextWraper = (props) => {
   async function getDataMyTraining() {
     handleSetStateMyTraining("isLoading", true);
     try {
-      const response = await instace.get("my-training");
+      const response = await instace.get(`my-training`);
       handleSetStateMyTraining("data", response.data);
     } catch (err) {
       handleSetStateMyTraining("isError", true);
@@ -102,6 +125,9 @@ export const ContextWraper = (props) => {
         handleOk,
         handleClick,
         getDataTraining,
+        handleChanges,
+        handleChange,
+        status,
       }}
     >
       {props.children}

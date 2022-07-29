@@ -11,7 +11,7 @@ function ToggleView() {
     <div>
       {tableViews ? <MyTrainingTableView /> : <MyTrainingCard />}
       {tableViews ? (
-        <AllTrainingTableView />
+        <AllTrainingTableView search={search} />
       ) : (
         <AllTrainingEvent search={search} />
       )}

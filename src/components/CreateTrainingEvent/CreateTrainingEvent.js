@@ -178,7 +178,7 @@ const CreateTrainingEvent = () => {
           </Form.Item>
         </Form.Item>
         <Form.Item
-          value={form.date}
+          // value={form.date}
           label="Date"
           name="date"
           rules={[{ required: true, message: "Please select date" }]}

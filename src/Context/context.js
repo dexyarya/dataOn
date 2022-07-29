@@ -9,19 +9,21 @@ export const ContextWraper = (props) => {
     isError: false,
   });
 
-  // const [trainingType, setTrainingType] = useState("");
+  const [trainingType, setTrainingType] = useState(true);
   const handleChanges = (v, e) => {
     e.value;
-    //   console.log(e.value);
-    //   if (e.value === "Complete") {
-    //     e.value = "true";
-    //   } else {
-    //     e.value = "false";
-    //   }
-    //   // getDataTraining(e.value);
-    //   setTrainingType(e.value);
+
+    console.log("iniiii", e.value);
+    if (e.value === "Complete") {
+      e.value = true;
+    } else {
+      e.value = false;
+    }
+    // getDataTraining(e.value);
+    setTrainingType(e.value);
   };
 
+  console.log("itesttt", trainingType);
   const [status, setStatus] = useState("");
   const handleChange = (v, e) => {
     if (e.value === "isOnline") {
@@ -30,18 +32,25 @@ export const ContextWraper = (props) => {
       e.value = false;
     }
 
-    // getDataTraining(e.value);
     setStatus(e.value);
   };
 
   console.log("test", status);
 
-  async function getDataTraining(search = "", status = "") {
+  useEffect(() => {
+    getDataTraining("", status, trainingType);
+  }, [status, trainingType]);
+
+  async function getDataTraining(
+    search = "",
+    status = status,
+    trainingType = trainingType
+  ) {
     handleSetStateTraining("isLoading", true);
 
     try {
       const response = await instace.get(
-        `trainings?search=${search}&isOnline=${status}`
+        `trainings?search=${search}&isOnline=${status}&isCompleted=${trainingType}`
       );
       handleSetStateTraining("data", response.data);
     } catch (err) {

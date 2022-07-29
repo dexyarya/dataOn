@@ -10,40 +10,10 @@ import PropTypes from "prop-types";
 import "./ardTrainingEvent.css";
 import { useNavigate } from "react-router-dom";
 import instace from "../API";
-
-const covertdate = (date) => {
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  const dateFormat = new Date(date);
-  const day = dateFormat.getDate();
-  const month = monthNames[dateFormat.getMonth() + 1];
-  const year = dateFormat.getFullYear();
-  const hour = (dateFormat.getHours() < 10 ? "0" : "") + dateFormat.getHours();
-  const minute =
-    (dateFormat.getMinutes() < 10 ? "0" : "") + dateFormat.getMinutes();
-  return `${day} ${month} ${year}, ${hour}:${minute}`;
-};
-
-const endDate = (endDate) => {
-  const dateFormat = new Date(endDate);
-  const hour = (dateFormat.getHours() < 10 ? "0" : "") + dateFormat.getHours();
-  const minute =
-    (dateFormat.getMinutes() < 10 ? "0" : "") + dateFormat.getMinutes();
-  return `${hour}:${minute}`;
-};
+import {
+  formatDate,
+  formatEndDate,
+} from "../../src/components/MyTrainingCard/FormatDate";
 
 function CardTrainingEvent(props) {
   const joinText = "You've joined this class";
@@ -78,8 +48,8 @@ function CardTrainingEvent(props) {
       .then((res) => {
         if (res.status === 200) {
           message.success("Training Event berhasil dihapus");
-          window.location.reload();
         }
+        window.location.reload();
       })
       .catch((err) => {
         if (err) {
@@ -151,7 +121,7 @@ function CardTrainingEvent(props) {
 
           <h3 className="title">{props.eventName}</h3>
           <p className="description" style={{ marginBottom: "0" }}>
-            {covertdate(props.startDate)} - {endDate(props.endDate)}
+            {formatDate(props.startDate)} - {formatEndDate(props.endDate)}
           </p>
           <Row justify="between">
             <Col>
@@ -192,7 +162,7 @@ function CardTrainingEvent(props) {
             </p>
             <h3 className="tTitle">{props.eventName}</h3>
             <p className="tDate">
-              {covertdate(props.startDate)} - {endDate(props.endDate)}
+              {formatDate(props.startDate)} - {formatEndDate(props.endDate)}
             </p>
             <p className="tUser">
               <UserOutlined className="iconCard" />

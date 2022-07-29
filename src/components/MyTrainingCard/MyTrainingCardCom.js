@@ -8,39 +8,7 @@ import {
 import "./MyTrainingCardCom.css";
 import instace from "../../API";
 import { useNavigate } from "react-router-dom";
-
-const formatDate = (date) => {
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const newDate = new Date(date);
-  const day = newDate.getDate();
-  const month = monthNames[newDate.getMonth()];
-  const year = newDate.getFullYear();
-  const hour = (newDate.getHours() < 10 ? "0" : "") + newDate.getHours();
-  const minute = (newDate.getMinutes() < 10 ? "0" : "") + newDate.getMinutes();
-  const dateToday = day + " " + month + " " + year + ", " + hour + ":" + minute;
-  return dateToday;
-};
-
-const formatEndDate = (endDate) => {
-  const newDate = new Date(endDate);
-  const hour = (newDate.getHours() < 10 ? "0" : "") + newDate.getHours();
-  const minute = (newDate.getMinutes() < 10 ? "0" : "") + newDate.getMinutes();
-  const clockToday = hour + ":" + minute;
-  return clockToday;
-};
+import { formatDate, formatEndDate } from "./FormatDate";
 
 const MyTrainingCardCom = (props) => {
   const navigate = useNavigate();
@@ -103,7 +71,7 @@ const MyTrainingCardCom = (props) => {
               <EnvironmentOutlined className="iconCard" />
               {item.location}
             </p>
-            <h3 className="tTitle">{item.trainingName}</h3>
+            <h3 className="tTitle">{item.eventName}</h3>
             <p className="tDate">
               {formatDate(item.startDate)} - {formatEndDate(item.endDate)}
             </p>

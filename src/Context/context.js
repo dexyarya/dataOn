@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import instace from "../API";
-
-export const AppContext = createContext(null);
+export const AppContext = createContext();
 
 export const ContextWraper = (props) => {
   const [training, setTrainingData] = useState({
@@ -9,6 +8,16 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
   });
+  async function getDataTraining(search = "") {
+    handleSetStateTraining("isLoading", true);
+    try {
+      const response = await instace.get(`trainings?search=${search}`);
+      handleSetStateTraining("data", response.data);
+    } catch (err) {
+      handleSetStateTraining("isError", true);
+    }
+    handleSetStateTraining("isLoading", false);
+  }
 
   const [myTraining, setMyTrainingData] = useState({
     data: [],
@@ -27,20 +36,37 @@ export const ContextWraper = (props) => {
     handleSetStateMyTraining("isLoading", false);
   }
 
-  async function getDataTraining() {
-    handleSetStateTraining("isLoading", true);
+  const [trainingNext, setTrainingDataNext] = useState({
+    data: [],
+    isLoading: false,
+    isError: false,
+  });
+
+  async function getDataTrainingNext() {
+    handleSetStateTrainingNext("isLoading", true);
     try {
-      const response = await instace.get("trainings");
-      handleSetStateTraining("data", response.data);
+      const response = await instace.get(`trainings?page=1&limit=10`);
+      handleSetStateTrainingNext("data", response.data);
     } catch (err) {
-      handleSetStateTraining("isError", true);
+      handleSetStateTrainingNext("isError", true);
     }
-    handleSetStateTraining("isLoading", false);
+    handleSetStateTrainingNext("isLoading", false);
   }
+
+  const [tableViews, setTableView] = useState(false);
+  const [modalViews, setModalView] = useState(false);
+
+  const handleOk = () => {
+    setModalView(false);
+  };
+
+  const handleClick = () => {
+    setTableView(!tableViews);
+  };
 
   useEffect(() => {
     getDataMyTraining();
-    getDataTraining();
+    getDataTrainingNext();
   }, []);
 
   const handleSetStateMyTraining = (field, value) => {
@@ -57,11 +83,25 @@ export const ContextWraper = (props) => {
     }));
   };
 
+  const handleSetStateTrainingNext = (field, value) => {
+    setTrainingDataNext((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
   return (
     <AppContext.Provider
       value={{
         training,
         myTraining,
+        trainingNext,
+        tableViews,
+        modalViews,
+        setModalView,
+        handleOk,
+        handleClick,
+        getDataTraining,
       }}
     >
       {props.children}

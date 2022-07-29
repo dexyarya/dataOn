@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Modal } from "antd";
+import { AppContext } from "../Context/context";
 
-function ModalView({ modalViews, handleOk }) {
+function ModalView() {
+  const { modalViews, handleOk } = useContext(AppContext);
   return (
     <Modal
       style={{ textAlign: "center" }}

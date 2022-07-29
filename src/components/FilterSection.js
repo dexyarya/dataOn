@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Row, Card, Input, Select, Switch, Button, Col } from "antd";
 import ButtonTog from "./ToggleView/ButtonTog";
 import ButtonToge from "./ToggleView/ButtonToge";
 import { AppContext } from "../Context/context";
 
 const FileterSection = () => {
-  const { onSearch, handleClick, tableViews } = useContext(AppContext);
-
+  const { getDataTraining, handleClick, tableViews } = useContext(AppContext);
+  useEffect(() => {
+    getDataTraining();
+  }, []);
   console.log("initialValue", tableViews);
   const { Option } = Select;
   const onChange = (checked) => {
@@ -29,7 +31,7 @@ const FileterSection = () => {
               type={"search"}
               style={{ width: 300 }}
               placeholder="Search"
-              onChange={(e) => onSearch(e.target.value)}
+              onChange={(e) => getDataTraining(e.target.value)}
             />
           </Row>
         </Col>

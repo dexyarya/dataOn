@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import instace from "../API";
-
 export const AppContext = createContext();
 
 export const ContextWraper = (props) => {
@@ -9,18 +8,10 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
   });
-
-  const [search, setSerch] = useState("");
-  const Search = search;
-
-  const onSearch = (value) => {
-    setSerch(value);
-  };
-
-  async function getDataTraining() {
+  async function getDataTraining(search = "") {
     handleSetStateTraining("isLoading", true);
     try {
-      const response = await instace.get(`trainings?search=${Search}`);
+      const response = await instace.get(`trainings?search=${search}`);
       handleSetStateTraining("data", response.data);
     } catch (err) {
       handleSetStateTraining("isError", true);
@@ -76,12 +67,7 @@ export const ContextWraper = (props) => {
   useEffect(() => {
     getDataMyTraining();
     getDataTrainingNext();
-    onSearch();
   }, []);
-
-  useEffect(() => {
-    getDataTraining();
-  }, [Search]);
 
   const handleSetStateMyTraining = (field, value) => {
     setMyTrainingData((prevState) => ({
@@ -110,13 +96,12 @@ export const ContextWraper = (props) => {
         training,
         myTraining,
         trainingNext,
-        onSearch,
-        search,
         tableViews,
         modalViews,
         setModalView,
         handleOk,
         handleClick,
+        getDataTraining,
       }}
     >
       {props.children}

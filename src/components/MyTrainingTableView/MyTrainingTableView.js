@@ -41,10 +41,10 @@ const MyTrainingTableView = () => {
   const columns = [
     {
       title: "Event Name",
-      dataIndex: "trainingName",
+      dataIndex: "eventName",
       key: "trainingName",
       render: (text) => <a>{text}</a>,
-      sorter: (a, b) => a.trainingName.localeCompare(b.trainingName),
+      sorter: (a, b) => a.eventName.localeCompare(b.eventName),
     },
     {
       title: "Event Type",

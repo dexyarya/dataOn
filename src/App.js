@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+// import { useState } from "react";
 import ModalView from "./components/ModalView";
 import FilterSection from "./components/FilterSection";
 import ToggleView from "./components/ToggleView/ToggleView";
@@ -11,17 +11,6 @@ import CreateTrainingEvent from "./components/CreateTrainingEvent/CreateTraining
 import { ContextWraper } from "./Context/context";
 
 function App() {
-  const [tableViews, setTableView] = useState(false);
-  const [modalViews, setModalView] = useState(false);
-
-  const handleOk = () => {
-    setModalView(false);
-  };
-
-  const handleClick = () => {
-    setTableView(!tableViews);
-  };
-
   return (
     <div className="App">
       <ContextWraper>
@@ -33,19 +22,12 @@ function App() {
               element={
                 <>
                   <TrainingEventList />
-                  <FilterSection
-                    tableView={tableViews}
-                    handleClick={handleClick}
-                  />
-                  <ToggleView tableView={tableViews} />{" "}
-                  <ModalView modalViews={modalViews} handleOk={handleOk} />
+                  <FilterSection />
+                  <ToggleView /> <ModalView />
                 </>
               }
             />
-            <Route
-              path="/create"
-              element={<CreateTrainingEvent setModalView={setModalView} />}
-            />
+            <Route path="/create" element={<CreateTrainingEvent />} />
             <Route path="/missing" element={<MissingPath />} />
             <Route path="/edit/:id" element={<CreateTrainingEvent />} />
           </Routes>

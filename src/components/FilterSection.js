@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Card, Input, Select, Switch, Button, Col } from "antd";
 import ButtonTog from "./ToggleView/ButtonTog";
 import ButtonToge from "./ToggleView/ButtonToge";
+import { AppContext } from "../Context/context";
 
-const FileterSection = ({ handleClick, tableView }) => {
+const FileterSection = () => {
+  const { onSearch, handleClick, tableViews } = useContext(AppContext);
+
+  console.log("initialValue", tableViews);
   const { Option } = Select;
   const onChange = (checked) => {
     console.log(`checked = ${checked}`);
@@ -21,7 +25,12 @@ const FileterSection = ({ handleClick, tableView }) => {
         <Col md={4} lg={5}>
           <Row>
             <Col style={{ marginBottom: "10px" }}>Search Training</Col>
-            <Input style={{ width: 300 }} placeholder="Search" />
+            <Input
+              type={"search"}
+              style={{ width: 300 }}
+              placeholder="Search"
+              onChange={(e) => onSearch(e.target.value)}
+            />
           </Row>
         </Col>
 
@@ -69,7 +78,7 @@ const FileterSection = ({ handleClick, tableView }) => {
         <Col xl={2}>
           <Row style={{ marginTop: 30 }}>
             <Button onClick={handleClick}>
-              {tableView ? <ButtonTog /> : <ButtonToge />}
+              {tableViews ? <ButtonTog /> : <ButtonToge />}
             </Button>
           </Row>
         </Col>

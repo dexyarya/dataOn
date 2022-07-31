@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import "./MyTrainingCard.css";
-import { Card, Badge } from "antd";
+import { Card, Badge, message } from "antd";
 import MyTrainingCardCom from "./MyTrainingCardCom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import instace from "../../API";
-import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../Context/context";
+import LoadingCmponent from "./LoadingComponent";
 
 function MyTrainingCard() {
-  const navigate = useNavigate();
-  const [items, setItems] = useState([]);
-  async function getData() {
-    try {
-      const response = await instace.get("my-training");
-      setItems([...items, ...response.data]);
-    } catch {
-      navigate("/missing");
-    }
-  }
-  useEffect(() => {
-    getData();
-  }, []);
+  const { myTraining } = useContext(AppContext);
+  if (myTraining.isLoading) return <LoadingCmponent />;
+  if (myTraining.error) return message.error("Get Data Filed");
 
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 5,
     },
@@ -54,14 +43,14 @@ function MyTrainingCard() {
           My Training Event{" "}
           <Badge
             className="site-badge-count-109"
-            count={items.length}
+            count={myTraining.data.length}
             style={{ backgroundColor: "#D6EFED", color: "#40a9ff" }}
           />
         </div>
 
         <div className="carousel">
           <Carousel responsive={responsive}>
-            {items.map((item, id) => (
+            {myTraining.data.map((item, id) => (
               <MyTrainingCardCom key={id} item={item} />
             ))}
           </Carousel>

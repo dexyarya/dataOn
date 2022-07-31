@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import moment from "moment";
 import { Form, message } from "antd";
 
-export const AppContext = createContext(null);
+export const AppContext = createContext();
 
 export const ContextWraper = (props) => {
   const [training, setTrainingData] = useState({
@@ -12,6 +12,24 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
   });
+
+  const [search, setSerch] = useState("");
+  const Search = search;
+
+  const onSearch = (value) => {
+    setSerch(value);
+  };
+
+  async function getDataTraining() {
+    handleSetStateTraining("isLoading", true);
+    try {
+      const response = await instace.get(`trainings?search=${Search}`);
+      handleSetStateTraining("data", response.data);
+    } catch (err) {
+      handleSetStateTraining("isError", true);
+    }
+    handleSetStateTraining("isLoading", false);
+  }
 
   const [myTraining, setMyTrainingData] = useState({
     data: [],
@@ -30,15 +48,21 @@ export const ContextWraper = (props) => {
     handleSetStateMyTraining("isLoading", false);
   }
 
-  async function getDataTraining() {
-    handleSetStateTraining("isLoading", true);
+  const [trainingNext, setTrainingDataNext] = useState({
+    data: [],
+    isLoading: false,
+    isError: false,
+  });
+
+  async function getDataTrainingNext() {
+    handleSetStateTrainingNext("isLoading", true);
     try {
-      const response = await instace.get("trainings");
-      handleSetStateTraining("data", response.data);
+      const response = await instace.get(`trainings?page=1&limit=10`);
+      handleSetStateTrainingNext("data", response.data);
     } catch (err) {
-      handleSetStateTraining("isError", true);
+      handleSetStateTrainingNext("isError", true);
     }
-    handleSetStateTraining("isLoading", false);
+    handleSetStateTrainingNext("isLoading", false);
   }
 
   const [data, setData] = useState({
@@ -175,11 +199,26 @@ export const ContextWraper = (props) => {
       message.error("This is an error messageeee");
     }
   };
+  const [tableViews, setTableView] = useState(false);
+  const [modalViews, setModalView] = useState(false);
+
+  const handleOk = () => {
+    setModalView(false);
+  };
+
+  const handleClick = () => {
+    setTableView(!tableViews);
+  };
 
   useEffect(() => {
     getDataMyTraining();
-    getDataTraining();
+    getDataTrainingNext();
+    onSearch();
   }, []);
+
+  useEffect(() => {
+    getDataTraining();
+  }, [Search]);
 
   const handleSetStateMyTraining = (field, value) => {
     setMyTrainingData((prevState) => ({
@@ -190,6 +229,13 @@ export const ContextWraper = (props) => {
 
   const handleSetStateTraining = (field, value) => {
     setTrainingData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const handleSetStateTrainingNext = (field, value) => {
+    setTrainingDataNext((prevState) => ({
       ...prevState,
       [field]: value,
     }));
@@ -207,6 +253,14 @@ export const ContextWraper = (props) => {
         form,
         data,
         getData,
+        trainingNext,
+        onSearch,
+        search,
+        tableViews,
+        modalViews,
+        setModalView,
+        handleOk,
+        handleClick,
       }}
     >
       {props.children}

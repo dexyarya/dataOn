@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import CardTrainingEvent from "./CardTrainingEvent";
-import { Card, Badge, List, Row, Col, Divider } from "antd";
+import { Card, Badge, List, Row, Col, Divider, message } from "antd";
 import { AppContext } from "../Context/context";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingComponent from "../components/MyTrainingCard/LoadingComponent";
 
 const AllTrainingEvent = () => {
-  const { training } = useContext(AppContext);
-  if (training.isLoading) return <p>loading...</p>;
+  const { training, trainingNext } = useContext(AppContext);
+  if (training.isLoading) return <LoadingComponent />;
+  if (training.error) return message.error("Get Data Error");
 
   return (
     <div>
@@ -14,7 +16,6 @@ const AllTrainingEvent = () => {
         style={{
           margin: "10px",
           borderRadius: "10px",
-          // height: 5,
         }}
         title={
           <Badge
@@ -42,7 +43,7 @@ const AllTrainingEvent = () => {
         <InfiniteScroll
           dataLength={training.data.length}
           hasMore={training.data.length < 10}
-          next={training.data}
+          next={trainingNext.data}
           loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>

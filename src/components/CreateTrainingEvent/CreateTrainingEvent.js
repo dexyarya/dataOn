@@ -45,7 +45,8 @@ const CreateTrainingEvent = () => {
     data,
     setModalView,
   } = useContext(AppContext);
-  if (form.isSucces) return navigate("/");
+  if (data.isModal) return navigate("/"), setModalView(true);
+  if (data.isSucces) return navigate("/");
   const params = useParams();
 
   useEffect(() => {

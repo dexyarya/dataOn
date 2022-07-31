@@ -73,6 +73,7 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
     isSucces: false,
+    isModal: false,
     date: "",
   });
 
@@ -102,7 +103,6 @@ export const ContextWraper = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("ini ngecreate", e);
     {
       e.id ? onEdit(e.id) : onCreate();
     }
@@ -111,7 +111,6 @@ export const ContextWraper = (props) => {
   async function getData(params) {
     try {
       const response = await instace.get(`trainings/${params}`);
-      console.log(response);
       setData({
         eventName: response.data.eventName,
         startDate: dayjs(response.data.startDate).format("YYYY-MM-DD HH:mm"),
@@ -146,7 +145,6 @@ export const ContextWraper = (props) => {
   });
 
   const onEdit = async (id) => {
-    alert("ini edit", id);
     const updateData = {
       eventName: data.eventName,
       location: data.location,
@@ -164,13 +162,13 @@ export const ContextWraper = (props) => {
       if (response.status === 200) {
         message.success("Training Updated Successfully");
       }
+      handleSetStateSucces("isSucces", true);
     } catch (err) {
       message.error("This is an error messageeee");
     }
   };
 
   const onCreate = async () => {
-    alert("ini create");
     const post = {
       image:
         "https://s3-ap-southeast-1.amazonaws.com/dressup/test/upload-images/image-1649837020.jpeg",
@@ -187,6 +185,7 @@ export const ContextWraper = (props) => {
     };
     try {
       await instace.post("trainings", post);
+      handleSetStateModal("isModal", true);
     } catch {
       message.error("This is an error messageeee");
     }
@@ -223,6 +222,19 @@ export const ContextWraper = (props) => {
 
   const handleSetStateTrainingNext = (field, value) => {
     setTrainingDataNext((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const handleSetStateSucces = (field, value) => {
+    setData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+  const handleSetStateModal = (field, value) => {
+    setData((prevState) => ({
       ...prevState,
       [field]: value,
     }));

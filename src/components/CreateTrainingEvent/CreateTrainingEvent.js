@@ -47,7 +47,6 @@ const CreateTrainingEvent = () => {
   if (form.isSucces) return navigate("/");
   const params = useParams();
 
-  console.log("params", params);
   useEffect(() => {
     if (params.id) {
       getData(params.id);
@@ -61,7 +60,7 @@ const CreateTrainingEvent = () => {
         borderRadius: "10px",
       }}
     >
-      <Form {...formItemLayout} form={form}>
+      <Form {...formItemLayout} form={params.id ? form : form.resetFields()}>
         <Form.Item label="Event No">TREV-YYMM-XXXX</Form.Item>
         <Form.Item
           name="eventType"

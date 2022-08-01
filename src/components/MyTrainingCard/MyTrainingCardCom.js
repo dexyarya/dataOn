@@ -52,7 +52,6 @@ const MyTrainingCardCom = (props) => {
   return (
     <>
       <Card
-        onClick={showModal}
         key={key}
         className="tainingCard"
         hoverable
@@ -62,7 +61,7 @@ const MyTrainingCardCom = (props) => {
         }}
         bodyStyle={{ padding: "0" }}
       >
-        <Row className="cardTrainingEvent">
+        <Row className="cardTrainingEvent" onClick={showModal}>
           <Col>
             <Image width={150} height={140} src={item.image} />
           </Col>
@@ -77,7 +76,7 @@ const MyTrainingCardCom = (props) => {
             </p>
             <p className="tUser">
               <UserOutlined className="iconCard" />
-              {item.author}
+              {item.speaker}
             </p>
           </Col>
         </Row>
@@ -115,13 +114,13 @@ const MyTrainingCardCom = (props) => {
               <EnvironmentOutlined className="iconCard" />
               {item.location}
             </p>
-            <h3 className="tTitle">{item.trainingName}</h3>
+            <h3 className="tTitle">{item.eventName}</h3>
             <p className="tDate">
               {formatDate(item.startDate)} - {formatEndDate(item.endDate)}
             </p>
             <p className="tUser">
               <UserOutlined className="iconCard" />
-              {item.author}
+              {item.speaker}
             </p>
           </Col>
         </Row>

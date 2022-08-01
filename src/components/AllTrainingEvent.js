@@ -4,7 +4,7 @@ import { Card, Badge, List, Row, Col, Divider, message } from "antd";
 import { AppContext } from "../Context/context";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingComponent from "../components/MyTrainingCard/LoadingComponent";
-// import { useEffect } from "../react";
+
 const AllTrainingEvent = () => {
   const { training, getDataTraining } = useContext(AppContext);
   if (training.isLoading) return <LoadingComponent />;

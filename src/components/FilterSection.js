@@ -1,21 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Row, Card, Input, Select, Switch, Button, Col } from "antd";
 import ButtonTog from "./ToggleView/ButtonTog";
 import ButtonToge from "./ToggleView/ButtonToge";
 import { AppContext } from "../Context/context";
 
 const FileterSection = () => {
-  const {
-    getDataTraining,
-    handleChanges,
-    handleChange,
-    handleClick,
-    tableViews,
-  } = useContext(AppContext);
-  useEffect(() => {
-    getDataTraining();
-  }, []);
-  // console.log("initialValue", tableViews);
+  const { handleChanges, handleChange, handleClick, tableViews, onSearch } =
+    useContext(AppContext);
+
   const { Option } = Select;
   const onChange = (checked) => {
     console.log(`checked = ${checked}`);
@@ -37,7 +29,7 @@ const FileterSection = () => {
               type={"search"}
               style={{ width: 300 }}
               placeholder="Search"
-              onChange={(e) => getDataTraining(e.target.value)}
+              onChange={onSearch}
             />
           </Row>
         </Col>
@@ -49,10 +41,14 @@ const FileterSection = () => {
               placeholder="Select Event"
               align="left"
               style={{ width: 300 }}
-              onChange={handleChanges}
+              onChange={handleChange}
             >
-              <Option value="Complete">Complete</Option>
-              <Option value="Not Complete">Not Complete</Option>
+              <Option name="onLine" value="isOnline">
+                Online
+              </Option>
+              <Option name="offLine" value="isOffline">
+                Offline
+              </Option>
             </Select>
           </Row>
         </Col>
@@ -66,14 +62,15 @@ const FileterSection = () => {
             <Select
               placeholder="Select Event"
               align="left"
+              datadata
               style={{ width: 300 }}
-              onChange={handleChange}
+              onChange={handleChanges}
             >
-              <Option name="eventType" value="isOnline">
-                Online
+              <Option name="isCompleted" value="isCompleted">
+                Completed
               </Option>
-              <Option name="eventTypeof" value="isOffline">
-                Offline
+              <Option name="isNotCompleted" value="isNotCompleted">
+                Not Completed
               </Option>
             </Select>
           </Row>

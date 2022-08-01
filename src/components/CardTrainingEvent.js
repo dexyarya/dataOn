@@ -48,8 +48,8 @@ function CardTrainingEvent(props) {
       .then((res) => {
         if (res.status === 200) {
           message.success("Training Event berhasil dihapus");
+          window.location.reload();
         }
-        window.location.reload();
       })
       .catch((err) => {
         if (err) {
@@ -110,7 +110,7 @@ function CardTrainingEvent(props) {
         >
           <Row justify="between">
             <Col style={{ marginRight: "3px" }}>
-              {isOnline ? (
+              {isOnline === true ? (
                 <GlobalOutlined className="icon" />
               ) : (
                 <EnvironmentOutlined className="icon" />
@@ -153,7 +153,7 @@ function CardTrainingEvent(props) {
           </Col>
           <Col className="textContent">
             <p className="tLocation">
-              {isOnline ? (
+              {isOnline === true ? (
                 <GlobalOutlined className="icon" />
               ) : (
                 <EnvironmentOutlined className="icon" />

@@ -9,37 +9,28 @@ export const ContextWraper = (props) => {
     isError: false,
   });
 
-  const [trainingType, setTrainingType] = useState(true);
-  const handleChanges = (v, e) => {
-    e.value;
-
-    console.log("iniiii", e.value);
-    if (e.value === "Complete") {
-      e.value = true;
-    } else {
-      e.value = false;
-    }
-    // getDataTraining(e.value);
-    setTrainingType(e.value);
-  };
-
-  console.log("itesttt", trainingType);
   const [status, setStatus] = useState("");
-  const handleChange = (v, e) => {
-    if (e.value === "isOnline") {
-      e.value = true;
-    } else {
-      e.value = false;
-    }
-
-    setStatus(e.value);
+  const handleChanges = (v, e) => {
+    setStatus(e.value === "isCompleted" ? true : false);
+    console.log("ini", status);
   };
 
-  console.log("test", status);
+  const [trainingType, setTrainingType] = useState("");
+  const handleChange = (v, e) => {
+    setTrainingType(e.value === "isOnline" ? true : false);
+  };
+  const [search, setSearch] = useState("");
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  console.log("test", search);
 
   useEffect(() => {
-    getDataTraining("", status, trainingType);
-  }, [status, trainingType]);
+    getDataTraining(search, status, trainingType);
+  }, [search, status, trainingType]);
+
+  console.log("data inin", training);
 
   async function getDataTraining(
     search = "",
@@ -47,10 +38,13 @@ export const ContextWraper = (props) => {
     trainingType = trainingType
   ) {
     handleSetStateTraining("isLoading", true);
+    console.log("search", search);
+    console.log("EventType", trainingType);
+    console.log("statussssssssssss", status);
 
     try {
       const response = await instace.get(
-        `trainings?search=${search}&isOnline=${status}&isCompleted=${trainingType}`
+        `trainings?eventName=${search}&isOnline=${trainingType}&isCompleted=${status}`
       );
       handleSetStateTraining("data", response.data);
     } catch (err) {
@@ -145,6 +139,7 @@ export const ContextWraper = (props) => {
         handleChanges,
         handleChange,
         status,
+        onSearch,
       }}
     >
       {props.children}

@@ -7,14 +7,16 @@ import { AppContext } from "../../Context/context";
 import { columns } from "./AllTrainingTableViewData";
 
 const AllTrainingTableView = () => {
-  const { training } = useContext(AppContext);
+  const { training, status, completed, search } = useContext(AppContext);
   const [data, setData] = useState([]);
   const [totalPage, setTotalPages] = useState(1);
   const [pages, setPages] = useState(1);
 
   async function getData() {
     try {
-      const response = await instace.get(`trainings?page=${pages}&limit=10`);
+      const response = await instace.get(
+        `trainings?eventName=${search}&page=${pages}&limit=10&isOnline=${status}&isCompleted=${completed}`
+      );
       setData([...response.data]);
       setTotalPages(training.data.length);
     } catch (err) {
@@ -32,7 +34,7 @@ const AllTrainingTableView = () => {
   };
   useEffect(() => {
     getData();
-  }, [pages]);
+  }, [pages, status, completed]);
 
   return (
     <>

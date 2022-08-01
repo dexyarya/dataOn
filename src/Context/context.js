@@ -12,10 +12,33 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
   });
-  async function getDataTraining(search = "") {
+
+  const [search, setSearch] = useState("");
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const [status, setStatus] = useState("");
+  const handleChangeStatus = (e) => {
+    setStatus(e === "isOnline" ? true : false);
+  };
+
+  const [completed, setCompleted] = useState("");
+  const handleChangeCompleted = (e) => {
+    setCompleted(e === "isCompleted" ? true : false);
+  };
+
+  useEffect(() => {
+    getDataTraining(search, status, completed);
+    getDataMyTraining();
+  }, [search, status, completed]);
+
+  async function getDataTraining(search = "", status, completed) {
     handleSetStateTraining("isLoading", true);
     try {
-      const response = await instace.get(`trainings?search=${search}`);
+      const response = await instace.get(
+        `trainings?eventName=${search}&isOnline=${status}&isCompleted=${completed}`
+      );
       handleSetStateTraining("data", response.data);
     } catch (err) {
       handleSetStateTraining("isError", true);
@@ -32,7 +55,7 @@ export const ContextWraper = (props) => {
   async function getDataMyTraining() {
     handleSetStateMyTraining("isLoading", true);
     try {
-      const response = await instace.get("my-training");
+      const response = await instace.get(`my-training`);
       handleSetStateMyTraining("data", response.data);
     } catch (err) {
       handleSetStateMyTraining("isError", true);
@@ -202,7 +225,6 @@ export const ContextWraper = (props) => {
   };
 
   useEffect(() => {
-    getDataMyTraining();
     getDataTrainingNext();
   }, []);
 
@@ -259,6 +281,12 @@ export const ContextWraper = (props) => {
         handleOk,
         handleClick,
         getDataTraining,
+        onSearch,
+        handleChangeStatus,
+        handleChangeCompleted,
+        search,
+        status,
+        completed,
       }}
     >
       {props.children}

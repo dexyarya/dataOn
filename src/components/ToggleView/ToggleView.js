@@ -9,7 +9,11 @@ function ToggleView() {
   const { search, tableViews } = useContext(AppContext);
   return (
     <div>
-      {tableViews ? <MyTrainingTableView /> : <MyTrainingCard />}
+      {tableViews ? (
+        <MyTrainingTableView />
+      ) : (
+        <MyTrainingCard search={search} />
+      )}
       {tableViews ? (
         <AllTrainingTableView />
       ) : (

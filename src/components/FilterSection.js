@@ -5,7 +5,14 @@ import ButtonToge from "./ToggleView/ButtonToge";
 import { AppContext } from "../Context/context";
 
 const FileterSection = () => {
-  const { getDataTraining, handleClick, tableViews } = useContext(AppContext);
+  const {
+    getDataTraining,
+    handleClick,
+    tableViews,
+    onSearch,
+    handleChangeStatus,
+    handleChangeCompleted,
+  } = useContext(AppContext);
   useEffect(() => {
     getDataTraining();
   }, []);
@@ -31,21 +38,22 @@ const FileterSection = () => {
               type={"search"}
               style={{ width: 300 }}
               placeholder="Search"
-              onChange={(e) => getDataTraining(e.target.value)}
+              onChange={onSearch}
             />
           </Row>
         </Col>
 
         <Col md={4} lg={5}>
           <Row justify="space-between">
-            <Col style={{ marginBottom: "10px" }}>Event Training</Col>
+            <Col style={{ marginBottom: "10px" }}>Event Type</Col>
             <Select
               placeholder="Select Event"
               align="left"
               style={{ width: 300 }}
+              onChange={handleChangeStatus}
             >
-              <Option value="1">Not Identified</Option>
-              <Option value="2">Closed</Option>
+              <Option value="isOnline">Online Class</Option>
+              <Option value="IsOffline">Offline Class</Option>
             </Select>
           </Row>
         </Col>
@@ -61,9 +69,10 @@ const FileterSection = () => {
               style={{ width: 300 }}
               bodyStyle={{ padding: "0" }}
               placeholder="Select Status"
+              onChange={handleChangeCompleted}
             >
-              <Option value="1">Not Identified</Option>
-              <Option value="2">Closed</Option>
+              <Option value="isCompleted">Completed</Option>
+              <Option value="isNotCompleted">No Completed</Option>
             </Select>
           </Row>
         </Col>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Card,
   Form,
@@ -8,8 +8,7 @@ import {
   DatePicker,
   InputNumber,
 } from "antd";
-import instace from "../../API";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../Context/context";
 const { RangePicker } = DatePicker;
 
@@ -34,71 +33,26 @@ const formItemLayout = {
 };
 
 const CreateTrainingEvent = () => {
-  const { setModalView } = useContext(AppContext);
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    trainingName: "",
-    startDate: "",
-    endDate: "",
-    image: "",
-    author: "",
-    location: "",
-    ratings: "",
-    isOnline: "",
-    isOffline: "",
-    information: "",
-    participant: "",
-    eventType: "",
-  });
+  const {
+    handleSubmit,
+    handleChange,
+    handleChangeDate,
+    handleChanges,
+    form,
+    getData,
+    data,
+    setModalView,
+  } = useContext(AppContext);
+  if (data.isModal) return navigate("/"), setModalView(true);
+  if (data.isSucces) return navigate("/");
+  const params = useParams();
 
-  const handleChanges = (v, e) => {
-    setForm({
-      ...form,
-      eventType: e.value,
-    });
-  };
-
-  const handleChangeDate = (range) => {
-    const valueOfInput1 = range[0].format();
-    const valueOfInput2 = range[1].format();
-    setForm({
-      ...form,
-      startDate: valueOfInput1,
-      endDate: valueOfInput2,
-    });
-  };
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setForm({
-      ...form,
-      [e.target.id]: value,
-    });
-  };
-
-  const handlesubmit = async () => {
-    const post = {
-      image:
-        "https://s3-ap-southeast-1.amazonaws.com/dressup/test/upload-images/image-1649837020.jpeg",
-      endDate: form.endDate,
-      ratings: form.ratings,
-      author: form.author,
-      location: form.location,
-      trainingName: form.trainingName,
-      startDate: form.startDate,
-      information: form.information,
-      participant: form.participant,
-      isOnline: form.eventType === "isOnline" ? true : false,
-      isOffline: form.eventType === "isOffline" ? true : false,
-    };
-    try {
-      await instace.post("my-training", post);
-      navigate("/");
-      setModalView(true);
-    } catch {
-      navigate("/missing");
+  useEffect(() => {
+    if (params.id) {
+      getData(params.id);
     }
-  };
+  }, [params]);
 
   return (
     <Card
@@ -107,7 +61,7 @@ const CreateTrainingEvent = () => {
         borderRadius: "10px",
       }}
     >
-      <Form {...formItemLayout} onFinish={handlesubmit}>
+      <Form {...formItemLayout} form={params.id ? form : form.resetFields()}>
         <Form.Item label="Event No">TREV-YYMM-XXXX</Form.Item>
         <Form.Item
           name="eventType"
@@ -115,7 +69,7 @@ const CreateTrainingEvent = () => {
           rules={[{ required: true, message: "Please select event type" }]}
         >
           <Select
-            value={form.eventType}
+            value={data.eventType}
             onChange={handleChanges}
             style={{ maxWidth: 500 }}
           >
@@ -128,25 +82,25 @@ const CreateTrainingEvent = () => {
           </Select>
         </Form.Item>
         <Form.Item
-          name="trainingName"
+          name="eventName"
           label="Training Name"
-          value={form.trainingName}
+          value={data.eventName}
           onChange={handleChange}
           rules={[{ required: true, message: "Please input event name" }]}
         >
           <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          value={form.author}
+          value={data.speaker}
           onChange={handleChange}
           label="Author"
-          name="author"
+          name="speaker"
           rules={[{ required: true, message: "Please input Autor" }]}
         >
-          <Input style={{ maxWidth: 500 }} />
+          <Input style={{ maxWidth: 500 }} value="tes" />
         </Form.Item>
         <Form.Item
-          value={form.location}
+          value={data.location}
           onChange={handleChange}
           label="Location"
           name="location"
@@ -155,7 +109,7 @@ const CreateTrainingEvent = () => {
           <Input style={{ maxWidth: 500 }} />
         </Form.Item>
         <Form.Item
-          value={form.information}
+          value={data.information}
           onChange={handleChange}
           label="Information"
           name="information"
@@ -165,20 +119,20 @@ const CreateTrainingEvent = () => {
         </Form.Item>
         <Form.Item
           label="Participant"
-          value={form.participant}
+          value={data.participant}
           onChange={handleChange}
         >
           <Form.Item name="participant" noStyle>
             <InputNumber min={1} max={100} type="number" />
           </Form.Item>
         </Form.Item>
-        <Form.Item label="Rating" onChange={handleChange} value={form.ratings}>
+        <Form.Item label="Rating" onChange={handleChange} value={data.ratings}>
           <Form.Item name="ratings" noStyle>
             <InputNumber min={1} max={100} type="number" />
           </Form.Item>
         </Form.Item>
         <Form.Item
-          // value={form.date}
+          value={data.date}
           label="Date"
           name="date"
           rules={[{ required: true, message: "Please select date" }]}
@@ -191,8 +145,12 @@ const CreateTrainingEvent = () => {
           />
         </Form.Item>
         <Form.Item style={{ float: "right" }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button
+            type={params.id ? "danger" : "primary"}
+            htmlType="submit"
+            onClick={() => handleSubmit(params)}
+          >
+            {params.id ? "Update" : "Submit"}
           </Button>
         </Form.Item>
       </Form>

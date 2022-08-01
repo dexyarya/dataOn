@@ -5,8 +5,13 @@ import ButtonToge from "./ToggleView/ButtonToge";
 import { AppContext } from "../Context/context";
 
 const FileterSection = () => {
-  const { handleChanges, handleChange, handleClick, tableViews, onSearch } =
-    useContext(AppContext);
+  const {
+    handleChangeCompleted,
+    handleChangeStatus,
+    handleClick,
+    tableViews,
+    onSearch,
+  } = useContext(AppContext);
 
   const { Option } = Select;
   const onChange = (checked) => {
@@ -41,13 +46,13 @@ const FileterSection = () => {
               placeholder="Select Event"
               align="left"
               style={{ width: 300 }}
-              onChange={handleChange}
+              onChange={handleChangeStatus}
             >
               <Option name="onLine" value="isOnline">
-                Online
+                Online Class
               </Option>
               <Option name="offLine" value="isOffline">
-                Offline
+                Offline Class
               </Option>
             </Select>
           </Row>
@@ -60,18 +65,14 @@ const FileterSection = () => {
             </Col>
 
             <Select
-              placeholder="Select Event"
               align="left"
-              datadata
               style={{ width: 300 }}
-              onChange={handleChanges}
+              bodyStyle={{ padding: "0" }}
+              placeholder="Select Event"
+              onChange={handleChangeCompleted}
             >
-              <Option name="isCompleted" value="isCompleted">
-                Completed
-              </Option>
-              <Option name="isNotCompleted" value="isNotCompleted">
-                Not Completed
-              </Option>
+              <Option value="isCompleted">Completed</Option>
+              <Option value="isNotCompleted">Not Completed</Option>
             </Select>
           </Row>
         </Col>

@@ -65,7 +65,7 @@ const EditTraining = () => {
         startDate: dayjs(response.data.startDate).format("YYYY-MM-DD HH:mm"),
         endDate: dayjs(response.data.endDate).format("YYYY-MM-DD HH:mm"),
         image: response.data.image,
-        eventType: response.isOnline === true ? "isOnline" : "isOffline",
+        eventType: response.isOffline === true ? "isOffline" : "isOnline",
         location: response.data.location,
         speaker: response.data.speaker,
         ratings: response.data.ratings,

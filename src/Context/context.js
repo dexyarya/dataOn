@@ -8,10 +8,44 @@ export const ContextWraper = (props) => {
     isLoading: false,
     isError: false,
   });
-  async function getDataTraining(search = "") {
+
+  const [status, setStatus] = useState("");
+  const handleChanges = (v, e) => {
+    setStatus(e.value === "isCompleted" ? true : false);
+    console.log("ini", status);
+  };
+
+  const [trainingType, setTrainingType] = useState("");
+  const handleChange = (v, e) => {
+    setTrainingType(e.value === "isOnline" ? true : false);
+  };
+  const [search, setSearch] = useState("");
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  console.log("test", search);
+
+  useEffect(() => {
+    getDataTraining(search, status, trainingType);
+  }, [search, status, trainingType]);
+
+  console.log("data inin", training);
+
+  async function getDataTraining(
+    search = "",
+    status = status,
+    trainingType = trainingType
+  ) {
     handleSetStateTraining("isLoading", true);
+    console.log("search", search);
+    console.log("EventType", trainingType);
+    console.log("statussssssssssss", status);
+
     try {
-      const response = await instace.get(`trainings?search=${search}`);
+      const response = await instace.get(
+        `trainings?eventName=${search}&isOnline=${trainingType}&isCompleted=${status}`
+      );
       handleSetStateTraining("data", response.data);
     } catch (err) {
       handleSetStateTraining("isError", true);
@@ -28,7 +62,7 @@ export const ContextWraper = (props) => {
   async function getDataMyTraining() {
     handleSetStateMyTraining("isLoading", true);
     try {
-      const response = await instace.get("my-training");
+      const response = await instace.get(`my-training`);
       handleSetStateMyTraining("data", response.data);
     } catch (err) {
       handleSetStateMyTraining("isError", true);
@@ -102,6 +136,10 @@ export const ContextWraper = (props) => {
         handleOk,
         handleClick,
         getDataTraining,
+        handleChanges,
+        handleChange,
+        status,
+        onSearch,
       }}
     >
       {props.children}

@@ -4,9 +4,9 @@ import { Card, Badge, List, Row, Col, Divider, message } from "antd";
 import { AppContext } from "../Context/context";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingComponent from "../components/MyTrainingCard/LoadingComponent";
-
+// import { useEffect } from "../react";
 const AllTrainingEvent = () => {
-  const { training, trainingNext } = useContext(AppContext);
+  const { training, getDataTraining } = useContext(AppContext);
   if (training.isLoading) return <LoadingComponent />;
   if (training.error) return message.error("Get Data Error");
 
@@ -42,8 +42,8 @@ const AllTrainingEvent = () => {
       >
         <InfiniteScroll
           dataLength={training.data.length}
-          hasMore={training.data.length < 10}
-          next={trainingNext.data}
+          hasMore={training.data.length < 20}
+          next={getDataTraining}
           loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>

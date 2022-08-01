@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Row, Card, Input, Select, Switch, Button, Col } from "antd";
 import ButtonTog from "./ToggleView/ButtonTog";
 import ButtonToge from "./ToggleView/ButtonToge";
 import { AppContext } from "../Context/context";
 
 const FileterSection = () => {
-  const { getDataTraining, handleClick, tableViews } = useContext(AppContext);
-  useEffect(() => {
-    getDataTraining();
-  }, []);
-  console.log("initialValue", tableViews);
+  const { handleChanges, handleChange, handleClick, tableViews, onSearch } =
+    useContext(AppContext);
+
   const { Option } = Select;
   const onChange = (checked) => {
     console.log(`checked = ${checked}`);
@@ -31,21 +29,26 @@ const FileterSection = () => {
               type={"search"}
               style={{ width: 300 }}
               placeholder="Search"
-              onChange={(e) => getDataTraining(e.target.value)}
+              onChange={onSearch}
             />
           </Row>
         </Col>
 
         <Col md={4} lg={5}>
           <Row justify="space-between">
-            <Col style={{ marginBottom: "10px" }}>Event Training</Col>
+            <Col style={{ marginBottom: "10px" }}>Event Type</Col>
             <Select
               placeholder="Select Event"
               align="left"
               style={{ width: 300 }}
+              onChange={handleChange}
             >
-              <Option value="1">Not Identified</Option>
-              <Option value="2">Closed</Option>
+              <Option name="onLine" value="isOnline">
+                Online
+              </Option>
+              <Option name="offLine" value="isOffline">
+                Offline
+              </Option>
             </Select>
           </Row>
         </Col>
@@ -57,13 +60,18 @@ const FileterSection = () => {
             </Col>
 
             <Select
+              placeholder="Select Event"
               align="left"
+              datadata
               style={{ width: 300 }}
-              bodyStyle={{ padding: "0" }}
-              placeholder="Select Status"
+              onChange={handleChanges}
             >
-              <Option value="1">Not Identified</Option>
-              <Option value="2">Closed</Option>
+              <Option name="isCompleted" value="isCompleted">
+                Completed
+              </Option>
+              <Option name="isNotCompleted" value="isNotCompleted">
+                Not Completed
+              </Option>
             </Select>
           </Row>
         </Col>
